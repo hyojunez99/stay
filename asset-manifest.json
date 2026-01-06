@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/stay/static/css/main.4c28fe04.css",
+    "main.js": "/stay/static/js/main.a799ed16.js",
+    "static/media/EG_logo.png": "/stay/static/media/EG_logo.804649bafff067286920.png",
+    "static/media/EGWH_logo.png": "/stay/static/media/EGWH_logo.6c85dc36ebab46b6a297.png",
+    "index.html": "/stay/index.html",
+    "main.4c28fe04.css.map": "/stay/static/css/main.4c28fe04.css.map",
+    "main.a799ed16.js.map": "/stay/static/js/main.a799ed16.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4c28fe04.css",
+    "static/js/main.a799ed16.js"
+  ]
+}
