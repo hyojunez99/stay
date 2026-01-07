@@ -13,6 +13,7 @@ import BusinessMypage from "./pages/BusinessMypage";
 import OkPage from "./pages/OkPage";
 import SalePage from "./pages/SalePage";
 import "./assets/scss/global.scss";
+import ParkingGird from "./components/ParkingGird";
 
 const TempButtons = () => {
   const navigate = useNavigate();
@@ -66,6 +67,8 @@ const App = () => {
             <Route path="okpage" element={<OkPage />} />
             <Route path="salepage" element={<SalePage />} />
           </Route>
+        </Route>
+        <Route path="grid" element={<ParkingGird />}>
         </Route>
       </Routes>
     </HashRouter>
