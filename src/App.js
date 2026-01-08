@@ -11,24 +11,25 @@ import BusinessMypage from "./pages/BusinessMypage";
 import OkPage from "./pages/OkPage";
 import SalePage from "./pages/SalePage";
 import "./assets/scss/global.scss";
+import Visited from "./pages/Visited";
 
 const TempButtons = () => {
-  const navigate = useNavigate();
-  return (
-    <div>
-      <h2>임시 이동버튼</h2>
-      {/* 테스트용 역할별 이동 버튼 */}
-      <button onClick={() => navigate("/app/resident")}>
-        입주민 페이지로 이동
-      </button>
-      <button onClick={() => navigate("/app/business")}>
-        사업자 페이지로 이동
-      </button>
-      <button onClick={() => navigate("/app/admin")}>
-        관리자 페이지로 이동
-      </button>
-    </div>
-  );
+    const navigate = useNavigate();
+    return (
+        <div>
+            <h2>임시 이동버튼</h2>
+            {/* 테스트용 역할별 이동 버튼 */}
+            <button onClick={() => navigate("/app/resident")}>
+                입주민 페이지로 이동
+            </button>
+            <button onClick={() => navigate("/app/business")}>
+                사업자 페이지로 이동
+            </button>
+            <button onClick={() => navigate("/app/admin")}>
+                관리자 페이지로 이동
+            </button>
+        </div>
+    );
 };
 
 const App = () => {
@@ -47,11 +48,12 @@ const App = () => {
             <Route path="mypage" element={<ResidentMypage />} />
           </Route>
 
-          {/* 사업자 페이지 */}
-          <Route path="business">
-            <Route index element={<BusinessDashboard />} />
-            <Route path="mypage" element={<BusinessMypage />} />
-          </Route>
+                    {/* 사업자 페이지 */}
+                    <Route path="business">
+                        <Route index element={<BusinessDashboard />} />
+                        <Route path="mypage" element={<BusinessMypage />} />
+                        <Route path="visited" element={<Visited role="business" />} />
+                    </Route>
 
           {/* 관리자 페이지 */}
           <Route path="admin">
