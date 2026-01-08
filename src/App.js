@@ -12,7 +12,7 @@ import OkPage from "./pages/OkPage";
 import BoardPage from "./pages/BoardPage";
 import SalePage from "./pages/SalePage";
 import "./assets/scss/global.scss";
-import Visited from "./pages/Visited";
+import ParkingGird from "./components/ParkingGird";
 
 const TempButtons = () => {
     const navigate = useNavigate();
@@ -42,11 +42,14 @@ const App = () => {
         <Route path="/signup" element={<SignUpPages />} />
         {/* 공통 Layout*/}
         <Route path="/app" element={<Layout />}>
+          <Route index element={<ParkingDashboard />} /> 
+
           {/* 입주민 페이지 */}
           <Route path="resident">
             <Route index element={<ResidentDashboard />} />
             <Route path="favorite" element={<ResidentFav />} />
             <Route path="mypage" element={<ResidentMypage />} />
+            <Route path="visited" element={<Visited role="resident" />} />
           </Route>
 
                     {/* 사업자 페이지 */}
@@ -63,6 +66,8 @@ const App = () => {
             <Route path="okpage" element={<OkPage />} />
             <Route path="salepage" element={<SalePage />} />
           </Route>
+        </Route>
+        <Route path="grid" element={<ParkingGird />}>
         </Route>
       </Routes>
       {/* 임시버튼 */}
