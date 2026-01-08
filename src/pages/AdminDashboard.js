@@ -1,29 +1,24 @@
 import "./AdminDashboard.scss";
 import { useNavigate } from "react-router-dom";
-import Logo from "../assets/images/Logo/EGWH_logo.png";
 import AdminImg from "../assets/images/admin/admin-img.png";
-import AdminImg2 from "../assets/images/Logo/logo-2.png";
-import AdminBanner1 from "../assets/images/Banner/MB_Banner_ST.jpg";
-import AdminBanner2 from "../assets/images/Banner/DT_Banner_ST.jpg";
-import AdminBanner3 from "../assets/images/Banner/DT_Banner_HO.jpg";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   return (
     <div className="desktop">
       <div className="admin-dashboard">
-        <img className="logoI"src={AdminImg2} alt="EGWH 로고" />
-        {/* 상단 초록 카드 */}
+                {/* 상단 초록 카드 */}
         <section className="card">
+
           {/* 로고 */}
           <div className="admin-header">
-            <img src={Logo} alt="EGWH 로고" />
-            
+
             <div className="top-text">
               <p className="apt-name">스테이아파트</p>
               <p className="role">관리자</p>
             </div>
           </div>
+
           {/* 기존 관리자 정보 */}
           <div className="admin-box">
             <img className="admin" src={AdminImg} alt="관리사무소 사람" />
@@ -38,6 +33,7 @@ const AdminDashboard = () => {
             </div>
           </div>
         </section>
+        
         {/* 메뉴 섹션 */}
         <section className="menu">
           
@@ -66,11 +62,6 @@ const AdminDashboard = () => {
             </p>
           </button>
         </section>
-        <div className="admin-banner">
-            <img src={AdminBanner1} alt="스터디 배너" />
-            <img src={AdminBanner2} alt="스터디 배너" />
-            <img src={AdminBanner3} alt="집 분양 배너" />
-        </div>
         {/* 추가 기능 섹션 */}
         <section className="extra">
         
