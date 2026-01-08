@@ -13,6 +13,8 @@ import BoardPage from "./pages/BoardPage";
 import SalePage from "./pages/SalePage";
 import "./assets/scss/global.scss";
 import ParkingGird from "./components/ParkingGird";
+import Visited from "./pages/Visited";
+
 
 const TempButtons = () => {
     const navigate = useNavigate();
