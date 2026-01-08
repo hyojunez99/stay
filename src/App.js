@@ -34,7 +34,6 @@ const TempButtons = () => {
 const App = () => {
   return (
     <HashRouter>
-      {/* 임시버튼 */}
       <Routes>
         {/* 로그인 / 회원가입 페이지 */}
         <Route path="/" element={<LoginPages />} />
@@ -62,6 +61,7 @@ const App = () => {
           </Route>
         </Route>
       </Routes>
+      {/* 임시버튼 */}
       <TempButtons />
     </HashRouter>
   );

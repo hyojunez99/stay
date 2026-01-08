@@ -1,4 +1,4 @@
-// --- 주차 할인권 발급 ---
+// --- 주차 할인권 정산 ---
 import "./SaleCarIssue.scss";
 
 const SaleCarIssue = () => {

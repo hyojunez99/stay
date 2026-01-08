@@ -1,11 +1,10 @@
 @use "../assets/scss/mixin" as *;
 
 #controller {
-      @include tablet {
-      max-width: 530px;
-    }
+  @include tablet {
     max-width: 530px;
-
+  }
+  max-width: 530px;
   padding-bottom: 1.5rem;
   @include flex-layout(column, $gap: 0);
   width: 90%;
@@ -25,6 +24,9 @@
       cursor: pointer;
       transition: 0.3s;
       &.active {
+        background-color: #f7f7f7;
+      }
+      &:hover {
         background-color: #f7f7f7;
       }
     }
