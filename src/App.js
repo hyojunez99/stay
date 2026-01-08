@@ -13,6 +13,7 @@ import BoardPage from "./pages/BoardPage";
 import SalePage from "./pages/SalePage";
 import "./assets/scss/global.scss";
 import ParkingGird from "./components/ParkingGird";
+import Visited from './pages/Visited'
 
 const TempButtons = () => {
     const navigate = useNavigate();
@@ -42,7 +43,6 @@ const App = () => {
         <Route path="/signup" element={<SignUpPages />} />
         {/* 공통 Layout*/}
         <Route path="/app" element={<Layout />}>
-          <Route index element={<ParkingDashboard />} /> 
 
           {/* 입주민 페이지 */}
           <Route path="resident">
