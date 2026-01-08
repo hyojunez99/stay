@@ -264,33 +264,6 @@
   color: var(--color-font-white);
   transform: scale(1.03);
 }
-.desktop footer {
-  opacity: 0;
-  position: absolute;
-  right: 102.1%;
-  top: 71%;
-  font-family: "Pretendard", sans-serif;
-  font-size: 0.8rem;
-  font-weight: 400;
-  line-height: auto;
-  color: var(--color-font);
-  background-color: var(--color-main-3);
-  width: 184px;
-  height: 186px;
-  text-align: left;
-  padding: 1rem;
-}
-.desktop footer p {
-  color: var(--color-font-white);
-}
-.desktop footer .txt-top {
-  margin: 1.3rem 0;
-}
-@media all and (min-width: 1440px) {
-  .desktop footer {
-    opacity: 1;
-  }
-}
 .desktop .logout-btn {
   padding: 0.5rem 2.5rem;
   border-radius: 20px;
