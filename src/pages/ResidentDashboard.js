@@ -1,17 +1,29 @@
 // --- 입주민 메인 페이지 ---
 
-import ParkingDashboard from "./ParkingDashboard";
 import SystemController from "../components/SystemController";
 import BannerSection from "./BannerSection";
 import { useNavigate } from "react-router-dom";
+import Weather from "../components/Weather";
+import topImg from "../assets/images/Top/Intersect_PR.png";
+import "./ResidentDashboard.scss";
+import ParkingInfo from "../components/ParkingInfo";
+import ParkingGird from "../components/ParkingGird";
 
 const ResidentDashboard = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <h1>좋은하루</h1>
-      <ParkingDashboard />
+    <section id="resident">
+      <div className=" resident-top">
+        <img src={topImg} alt="상단 이미지" />
+        <div className="resident-txt">
+          <h2>좋은 하루 보내삼</h2>
+          {/* supabase를 통한 정보 불러오기 */}
+          <p>동탄역 스테이 타워</p>
+          <p>102동 1203호</p>
+          <Weather />
+        </div>
+      </div>
       <SystemController role="resident" />
       <BannerSection />
       <div className="favorite">
@@ -23,7 +35,9 @@ const ResidentDashboard = () => {
           즐겨 찾는 차량
         </button>
       </div>
-    </div>
+      <ParkingInfo />
+      <ParkingGird />
+    </section>
   );
 };
 
