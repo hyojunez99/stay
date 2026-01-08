@@ -14,7 +14,7 @@ import SalePage from "./pages/SalePage";
 import "./assets/scss/global.scss";
 import ParkingGird from "./components/ParkingGird";
 import Visited from "./pages/Visited";
-
+import ControlPage from './pages/ControlPage'
 
 const TempButtons = () => {
     const navigate = useNavigate();
@@ -66,7 +66,7 @@ const App = () => {
             <Route path="salepage" element={<SalePage />} />
           </Route>
         </Route>
-        <Route path="grid" element={<ParkingGird />}>
+        <Route path="Control" element={<ControlPage />}>
         </Route>
       </Routes>
       {/* 임시버튼 */}
