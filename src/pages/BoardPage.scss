@@ -1,3 +1,11 @@
+@use "../assets/scss/variables";
+@use "../assets/scss/mixin" as *;
+@use "../assets/scss/font" as font;
+
+
+
+
+
 .board-page {
     height: 100vh;
     display: flex;
@@ -7,8 +15,8 @@
 
 //상단 영역
 .board-header {
-    background-color: #fff;
-    padding: 16px;
+    background-color: var(--color-main-3);
+    padding: 4rem;
 }
 
 .board-header h2 {
@@ -26,22 +34,20 @@
     
 }
 
-//제목 + 작성일
-.board-table {
-    display: flex;
-    justify-content: space-between;
-    background-color: var(--color-main-3);
-    padding: 0.6rem;
-    font-weight: 600;
-}
 
-//스크롤 영역
+
+//제목/작성일+스크롤 영역
 .board-list {
     flex: 1;
     overflow-y: auto;
-    padding: 0 1rem;
-    
-
+    padding: 2rem;
+    .board-table{
+        background-color: var(--color-font-white);
+        @include flex-layout(row,  space-between, center, );
+        padding: 1rem;
+        border: 2px solid var(--color-main-3);
+        font-weight: bolder;
+    }
   //스크롤 바 숨김 처리
     -ms-overflow-style: none;
     scrollbar-width: none;

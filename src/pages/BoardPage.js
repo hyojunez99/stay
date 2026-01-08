@@ -82,15 +82,14 @@ const BoardPage = () => {
             </option>
           ))}
         </select>
-
-        <div className="board-table">
-          <span>제목</span>
-          <span>작성일</span>
-        </div>
       </div>
 
       {/* 스크롤 게시판 */}
       <div className="board-list">
+        <div className="board-table">
+            <p>제목</p>
+            <p>작성일</p>
+            </div>
         {boardList.map((item) => (
           <div key={item.id} className="board-row">
             <span>{item.title}</span>
