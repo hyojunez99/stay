@@ -2,7 +2,6 @@ import { HashRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Layout from "./layout/Layout";
 import LoginPages from "./pages/LoginPages";
 import SignUpPages from "./pages/SignUpPages";
-import ParkingDashboard from "./pages/ParkingDashboard";
 import ResidentDashboard from "./pages/ResidentDashboard";
 import BusinessDashboard from "./pages/BusinessDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -10,9 +9,10 @@ import ResidentFav from "./pages/ResidentFav";
 import ResidentMypage from "./pages/ResidentMypage";
 import BusinessMypage from "./pages/BusinessMypage";
 import OkPage from "./pages/OkPage";
+import BoardPage from "./pages/BoardPage";
 import SalePage from "./pages/SalePage";
 import "./assets/scss/global.scss";
-import Visited from "./pages/Visited";
+import ParkingGird from "./components/ParkingGird";
 
 const TempButtons = () => {
     const navigate = useNavigate();
@@ -34,25 +34,22 @@ const TempButtons = () => {
 };
 
 const App = () => {
-    return (
-        <HashRouter>
-            {/* 임시버튼 */}
-            <TempButtons />
-            <Routes>
-                {/* 로그인 / 회원가입 페이지 */}
-                <Route path="/" element={<LoginPages />} />
-                <Route path="/signup" element={<SignUpPages />} />
-                {/* 공통 Layout*/}
-                <Route path="/app" element={<Layout />}>
-                    <Route index element={<ParkingDashboard />} />
+  return (
+    <HashRouter>
+      <Routes>
+        {/* 로그인 / 회원가입 페이지 */}
+        <Route path="/" element={<LoginPages />} />
+        <Route path="/signup" element={<SignUpPages />} />
+        {/* 공통 Layout*/}
+        <Route path="/app" element={<Layout />}>
+          <Route index element={<ParkingDashboard />} /> 
 
-                    {/* 입주민 페이지 */}
-                    <Route path="resident">
-                        <Route index element={<ResidentDashboard />} />
-                        <Route path="favorite" element={<ResidentFav />} />
-                        <Route path="mypage" element={<ResidentMypage />} />
-                        <Route path="visited" element={<Visited role="resident" />} />
-                    </Route>
+          {/* 입주민 페이지 */}
+          <Route path="resident">
+            <Route index element={<ResidentDashboard />} />
+            <Route path="favorite" element={<ResidentFav />} />
+            <Route path="mypage" element={<ResidentMypage />} /> 
+          </Route>
 
                     {/* 사업자 페이지 */}
                     <Route path="business">
@@ -61,16 +58,21 @@ const App = () => {
                         <Route path="visited" element={<Visited role="business" />} />
                     </Route>
 
-                    {/* 관리자 페이지 */}
-                    <Route path="admin">
-                        <Route index element={<AdminDashboard />} />
-                        <Route path="okpage" element={<OkPage />} />
-                        <Route path="salepage" element={<SalePage />} />
-                    </Route>
-                </Route>
-            </Routes>
-        </HashRouter>
-    );
+          {/* 관리자 페이지 */}
+          <Route path="admin">
+            <Route index element={<AdminDashboard />} />
+            <Route path="board" element={<BoardPage />} />
+            <Route path="okpage" element={<OkPage />} />
+            <Route path="salepage" element={<SalePage />} />
+          </Route>
+        </Route>
+        <Route path="grid" element={<ParkingGird />}>
+        </Route>
+      </Routes>
+      {/* 임시버튼 */}
+      <TempButtons />
+    </HashRouter>
+  );
 };
 
 export default App;
