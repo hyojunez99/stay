@@ -3,6 +3,7 @@
 
 #resident {
   width: 100%;
+  // height: 100vh;
   @include flex-layout(column, center, center, 0);
   .resident-top {
     width: 100%;
@@ -10,7 +11,7 @@
     padding-bottom: 3rem;
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 50;
     > img {
       width: 100%;
       height: 239px;
@@ -24,7 +25,6 @@
       transform: translateY(-50%);
       z-index: 2;
       color: #fff;
-
       h2 {
         @include font-header();
         color: #fff;
@@ -36,6 +36,9 @@
     }
   }
   .favorite {
+    position: fixed;
+    bottom: 50px;
+    z-index: 100;
     @include flex-layout();
     button {
       cursor: pointer;

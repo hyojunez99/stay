@@ -3,14 +3,31 @@
 import { useState } from "react";
 import "./Car.scss";
 import "react-datepicker/dist/react-datepicker.css";
+import { issueDiscount } from "../../api/userApi";
 
-const SaleCar = () => {
+const SaleCar = ({ profile }) => {
   const [carNumber, setCarNumber] = useState(""); // 차량번호
   const [carSale, setCarSale] = useState(""); // 할인권 선택
 
   // 새로고침 방지
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!carNumber || !carSale) {
+      alert("차량번호와 할인권 시간을 선택해주세요.");
+      return;
+    }
+    try {
+      await issueDiscount({
+        storeProfileId: profile.id,
+        minutes: parseInt(carSale, 10),
+      });
+      alert(`차량 ${carNumber} 할인권 ${carSale}분 발급 완료!`);
+      setCarNumber("");
+      setCarSale("");
+    } catch (err) {
+      console.log("할인권 발급 실패", err);
+      alert("발급 실패");
+    }
   };
 
   return (
@@ -38,7 +55,7 @@ const SaleCar = () => {
         </select>
       </div>
 
-      <div className="btn">
+      <div className="car-btn">
         <button>차량 등록</button>
       </div>
     </form>

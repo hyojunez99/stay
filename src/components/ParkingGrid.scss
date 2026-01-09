@@ -1,43 +1,66 @@
-@use '../assets/scss/variables' as * ;
-@use '../assets/scss/font' as *;
+@use "../assets/scss/variables" as *;
+@use "../assets/scss/font" as *;
 
-.spot-card{
+.spot-card {
   width: 40%;
   height: 70px;
-  background-color: #B6ADD0;
+  background-color: #b6add0;
   border-radius: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  }
+}
 
-.carnum{
+.carnum {
   background-color: tomato;
 }
 
-.spot-card.paid{
+.spot-card.paid {
   background-color: #ff9494;
 }
 
-.parking{
+.parking {
+  // max-width: 530px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100%;
+  height: 70vh;
+  z-index: 30;
+
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  // justify-content: center;
   background-color: #f7f7f7;
-  border-radius: 2rem;
+  border-radius: 2rem 2rem 0 0;
+  transform: translateY(70%); /* 초기 아래 위치 */
+  transition: 0.3s;
+
+  .handle {
+    cursor: pointer;
+    width: 40px;
+    height: 5px;
+    background: #111;
+    border-radius: 10px;
+    margin: 12px auto;
+  }
+
+  &.open {
+    transform: translateY(0); /* 화면 전체로 올라옴 */
+  }
 }
-.all_box{
+
+.all_box {
   width: 100%;
   display: flex;
   justify-content: space-around;
   padding: 1rem;
-  p{
+  p {
     font-size: 12px;
     text-align: center;
   }
-  .R_box{
+  .R_box {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -47,61 +70,29 @@
     gap: 1rem;
     border-radius: 2rem;
     text-align: center;
+    align-content: flex-start;
   }
-  .S_box{
+  .S_box {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    align-content: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 1rem;
     border-radius: 2rem;
     text-align: center;
   }
-  // .color_box{
-  //     .r{
-  //       display: flex;
-  //       align-items: center;
-  //       flex-direction: column;
-  //       div{
-  //       width: 20px;
-  //       height:20px;
-  //       background-color: #B6ADD0;
-  //       }
-  //     }
-  //     .v{        
-  //       display: flex;
-  //       align-items: center;
-  //       flex-direction: column;
-  //       div{
-  //       width: 20px;
-  //       height:20px;
-  //       background-color: tomato;
-  //       }
-  //     }
-  //     .l{
-  //       display: flex;
-  //       align-items: center;
-  //       flex-direction: column;        
-  //       div{
-  //       width: 20px;
-  //       height:20px;
-  //       background-color: #B6ADD0;
-  //       }
-  //     }
-  //   }
 }
-.info-p{
+
+.info-p {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
   margin: 2rem 0;
-  p{
-    @include font-title 
+  p {
+    @include font-main;
   }
 }
-
-
-

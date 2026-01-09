@@ -3,7 +3,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Car.scss";
-import { createPeriodReservation } from "../../api/userApi"; // 장기 등록용 API
+import { createPeriodReservation } from "../../api/userApi"; 
 
 const LongCar = ({ profile }) => {
   const [carNumber, setCarNumber] = useState(""); // 차량번호
@@ -78,7 +78,7 @@ const LongCar = ({ profile }) => {
         />
       </div>
 
-      <div className="btn">
+      <div className="car-btn">
         <button type="submit">차량 등록</button>
       </div>
     </form>

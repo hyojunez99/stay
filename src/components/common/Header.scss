@@ -20,5 +20,10 @@ header {
   .mypage-icon {
     font-size: 2rem;
     cursor: pointer;
+    color: #fff;
+    transition: 0.3s;
+    &:hover{
+      color: var(--color-font-sub);
+    }
   }
 }

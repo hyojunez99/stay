@@ -3,7 +3,6 @@ import BannerSection from "./BannerSection";
 import "./BusinessDashboard.scss";
 import topImg from "../assets/images/Top/Intersect_OR.png";
 import Weather from "../components/Weather";
-import ParkingInfo from "../components/ParkingInfo";
 import ParkingGird from "../components/ParkingGird";
 import { fetchHeaderBundle } from "../api/userApi";
 import { useEffect, useState } from "react";
@@ -45,7 +44,6 @@ const BusinessDashboard = ({ profile }) => {
       </div>
       <SystemController role="business" />
       <BannerSection />
-      <ParkingInfo />
       <ParkingGird />
     </section>
   );

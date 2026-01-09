@@ -70,7 +70,7 @@ const VisitCar = ({ profile }) => {
         />
       </div>
 
-      <div className="btn">
+      <div className="car-btn">
         <button type="submit">차량 등록</button>
       </div>
     </form>

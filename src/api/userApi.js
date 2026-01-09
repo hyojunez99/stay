@@ -1,4 +1,4 @@
-import supabase  from "./supabaseClient";
+import supabase from "./supabaseClient";
 
 /* =====================================================
 로그인 / 회원가입
@@ -14,21 +14,23 @@ import supabase  from "./supabaseClient";
  * if (res.status === "OK") setProfile(res.profile);
  */
 export const loginProfile = async (loginId, password) => {
-    const { data, error } = await supabase
-        .from("profiles")
-        .select("id, login_id, password, user_type, is_approved, user_name, car_num, dong_ho")
-        .eq("login_id", loginId)
-        .maybeSingle();
+  const { data, error } = await supabase
+    .from("profiles")
+    .select(
+      "id, login_id, password, user_type, is_approved, user_name, car_num, dong_ho"
+    )
+    .eq("login_id", loginId)
+    .maybeSingle();
 
-    if (error) throw error;
-    if (!data) throw new Error("아이디가 없습니다.");
-    if (data.password !== password) throw new Error("비밀번호가 틀렸습니다.");
+  if (error) throw error;
+  if (!data) throw new Error("아이디가 없습니다.");
+  if (data.password !== password) throw new Error("비밀번호가 틀렸습니다.");
 
-    if (!data.is_approved) {
-        return { status: "PENDING", message: "관리자 승인 대기 중입니다." };
-    }
+  if (!data.is_approved) {
+    return { status: "PENDING", message: "관리자 승인 대기 중입니다." };
+  }
 
-    return { status: "OK", profile: data };
+  return { status: "OK", profile: data };
 };
 
 /**
@@ -39,20 +41,20 @@ export const loginProfile = async (loginId, password) => {
  * await signupProfile(formData);
  */
 export const signupProfile = async (form) => {
-    const { error } = await supabase.from("profiles").insert([
-        {
-        login_id: form.loginId,
-        password: form.password,
-        user_name: form.userName,
-        user_type: form.userType, // "APT" | "STORE"
-        car_num: form.carNum,
-        dong_ho: form.dongHo,
-        },
-    ]);
+  const { error } = await supabase.from("profiles").insert([
+    {
+      login_id: form.loginId,
+      password: form.password,
+      user_name: form.userName,
+      user_type: form.userType, // "APT" | "STORE"
+      car_num: form.carNum,
+      dong_ho: form.dongHo,
+    },
+  ]);
 
-    if (error) throw error;
-    return true;
-    };
+  if (error) throw error;
+  return true;
+};
 
 /* =====================================================
 공통 헤더
@@ -66,24 +68,24 @@ export const signupProfile = async (form) => {
  * const header = await fetchHeaderBundle(profile.id);
  */
 export const fetchHeaderBundle = async (profileId) => {
-    const { data: profile } = await supabase
-        .from("profiles")
-        .select("user_type, dong_ho, user_name, car_num")
-        .eq("id", profileId)
-        .single();
-        const { data: spot } = await supabase
-        .from("parking_spots")
-        .select("spot_id")
-        .eq("occupant_car", profile.car_num)
-        .eq("is_occupied", true)
-        .maybeSingle();
-    return {
-        user_type: profile.user_type,
-        role_label: profile.user_type === "APT" ? "입주자" : "사업자",
-        dong_ho: profile.dong_ho,
-        user_name: profile.user_name,
-        current_spot: spot?.spot_id ?? null,
-    };
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("user_type, dong_ho, user_name, car_num")
+    .eq("id", profileId)
+    .single();
+  const { data: spot } = await supabase
+    .from("parking_spots")
+    .select("spot_id")
+    .eq("occupant_car", profile.car_num)
+    .eq("is_occupied", true)
+    .maybeSingle();
+  return {
+    user_type: profile.user_type,
+    role_label: profile.user_type === "APT" ? "입주자" : "사업자",
+    dong_ho: profile.dong_ho,
+    user_name: profile.user_name,
+    current_spot: spot?.spot_id ?? null,
+  };
 };
 
 /* =====================================================
@@ -101,18 +103,22 @@ export const fetchHeaderBundle = async (profileId) => {
  *   dateISO: "2026-01-10"
  * });
  */
-export const createDailyReservation = async ({ profileId, carNum, dateISO }) => {
-    const { error } = await supabase.from("parking_reservations").insert([
-        {
-        profile_id: profileId,
-        car_num: carNum,
-        visit_type: "DAILY",
-        start_date: dateISO,
-        end_date: dateISO,
-        },
-    ]);
-    if (error) throw error;
-    return true;
+export const createDailyReservation = async ({
+  profileId,
+  carNum,
+  dateISO,
+}) => {
+  const { error } = await supabase.from("parking_reservations").insert([
+    {
+      profile_id: profileId,
+      car_num: carNum,
+      visit_type: "DAILY",
+      start_date: dateISO,
+      end_date: dateISO,
+    },
+  ]);
+  if (error) throw error;
+  return true;
 };
 
 /**
@@ -129,25 +135,25 @@ export const createDailyReservation = async ({ profileId, carNum, dateISO }) => 
  * });
  */
 export const createPeriodReservation = async ({
-    profileId,
-    carNum,
-    startDateISO,
-    endDateISO,
-    purpose,
-    }) => {
-    const { error } = await supabase.from("parking_reservations").insert([
-        {
-        profile_id: profileId,
-        car_num: carNum,
-        visit_type: "PERIOD",
-        start_date: startDateISO,
-        end_date: endDateISO,
-        purpose,
-        },
-    ]);
-    if (error) throw error;
-    return true;
-    };
+  profileId,
+  carNum,
+  startDateISO,
+  endDateISO,
+  purpose,
+}) => {
+  const { error } = await supabase.from("parking_reservations").insert([
+    {
+      profile_id: profileId,
+      car_num: carNum,
+      visit_type: "PERIOD",
+      start_date: startDateISO,
+      end_date: endDateISO,
+      purpose,
+    },
+  ]);
+  if (error) throw error;
+  return true;
+};
 
 /* =====================================================
 공통 - 추가 차량
@@ -161,13 +167,13 @@ export const createPeriodReservation = async ({
  * await updateAddCar({ profileId: profile.id, addCarNum });
  */
 export const updateAddCar = async ({ profileId, addCarNum }) => {
-    const { error } = await supabase
-        .from("profiles")
-        .update({ add_car: addCarNum })
-        .eq("id", profileId);
+  const { error } = await supabase
+    .from("profiles")
+    .update({ add_car: addCarNum })
+    .eq("id", profileId);
 
-    if (error) throw error;
-    return true;
+  if (error) throw error;
+  return true;
 };
 
 /* =====================================================
@@ -188,18 +194,21 @@ const UNIT_PRICE = 1500;
  * });
  */
 export const issueDiscount = async ({ storeProfileId, minutes }) => {
-    const qty = minutes / 30;
-    const { data } = await supabase
-        .from("parking_discounts")
-        .select("discount_sum")
-        .eq("profile_id", storeProfileId)
-        .maybeSingle();
-    const next = (data?.discount_sum ?? 0) + qty;
-    const { error } = await supabase
-        .from("parking_discounts")
-        .upsert({ profile_id: storeProfileId, discount_sum: next }, { onConflict: "profile_id" });
-    if (error) throw error;
-    return true;
+  const qty = minutes / 30;
+  const { data } = await supabase
+    .from("parking_discounts")
+    .select("discount_sum")
+    .eq("profile_id", storeProfileId)
+    .maybeSingle();
+  const next = (data?.discount_sum ?? 0) + qty;
+  const { error } = await supabase
+    .from("parking_discounts")
+    .upsert(
+      { profile_id: storeProfileId, discount_sum: next },
+      { onConflict: "profile_id" }
+    );
+  if (error) throw error;
+  return true;
 };
 
 /**
@@ -210,18 +219,18 @@ export const issueDiscount = async ({ storeProfileId, minutes }) => {
  * const summary = await fetchDiscountSummary(profile.id);
  */
 export const fetchDiscountSummary = async (storeProfileId) => {
-    const { data } = await supabase
-        .from("parking_discounts")
-        .select("discount_sum, created_at")
-        .eq("profile_id", storeProfileId)
-        .maybeSingle();
-        const qty = data?.discount_sum ?? 0;
-        return {
-        qty,
-        settlement_date: data?.created_at?.slice(0, 10) ?? null,
-        unit_price: UNIT_PRICE,
-        total_amount: qty * UNIT_PRICE,
-    };
+  const { data } = await supabase
+    .from("parking_discounts")
+    .select("discount_sum, created_at")
+    .eq("profile_id", storeProfileId)
+    .maybeSingle();
+  const qty = data?.discount_sum ?? 0;
+  return {
+    qty,
+    settlement_date: data?.created_at?.slice(0, 10) ?? null,
+    unit_price: UNIT_PRICE,
+    total_amount: qty * UNIT_PRICE,
+  };
 };
 
 /* =====================================================
@@ -236,18 +245,18 @@ export const fetchDiscountSummary = async (storeProfileId) => {
  * const list = await fetchVisitCars(profile.id);
  */
 export const fetchVisitCars = async (profileId) => {
-    const { data } = await supabase
-        .from("parking_reservations")
-        .select("id, car_num, status, start_date, end_date, favorite_cars(id)")
-        .eq("profile_id", profileId);
-    return (data || []).map((row) => ({
-        reservation_id: row.id,
-        car_num: row.car_num,
-        status: row.status,
-        start_date: row.start_date?.slice(0, 10),
-        end_date: row.end_date?.slice(0, 10),
-        is_favorite: (row.favorite_cars?.length ?? 0) > 0,
-    }));
+  const { data } = await supabase
+    .from("parking_reservations")
+    .select("id, car_num, status, start_date, end_date, favorite_cars(id)")
+    .eq("profile_id", profileId);
+  return (data || []).map((row) => ({
+    reservation_id: row.id,
+    car_num: row.car_num,
+    status: row.status,
+    start_date: row.start_date?.slice(0, 10),
+    end_date: row.end_date?.slice(0, 10),
+    is_favorite: (row.favorite_cars?.length ?? 0) > 0,
+  }));
 };
 
 /**
@@ -257,15 +266,17 @@ export const fetchVisitCars = async (profileId) => {
  * await toggleFavoriteCar(profile.id, carNum);
  */
 export const toggleFavoriteCar = async (profileId, carNum) => {
-    const { data } = await supabase
-        .from("favorite_cars")
-        .select("id")
-        .eq("profile_id", profileId)
-        .eq("car_num", carNum)
-        .maybeSingle();
-    if (data) {
-        await supabase.from("favorite_cars").delete().eq("id", data.id);
-    } else {
-        await supabase.from("favorite_cars").insert([{ profile_id: profileId, car_num: carNum }]);
-    }
+  const { data } = await supabase
+    .from("favorite_cars")
+    .select("id")
+    .eq("profile_id", profileId)
+    .eq("car_num", carNum)
+    .maybeSingle();
+  if (data) {
+    await supabase.from("favorite_cars").delete().eq("id", data.id);
+  } else {
+    await supabase
+      .from("favorite_cars")
+      .insert([{ profile_id: profileId, car_num: carNum }]);
+  }
 };
