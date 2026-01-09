@@ -15,7 +15,7 @@ import "./assets/scss/global.scss";
 import ParkingGird from "./components/ParkingGird";
 import Visited from "./pages/Visited";
 import ControlPage from './pages/ControlPage'
-import  AppProvider from "./contexts/AdminContext";
+
 
 const TempButtons = () => {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const TempButtons = () => {
 
 const App = () => {
   return (
-    <AppProvider>
+
       <HashRouter>
         <Routes>
           {/* 로그인 / 회원가입 페이지 */}
@@ -74,7 +74,6 @@ const App = () => {
         {/* 임시버튼 */}
         <TempButtons />
       </HashRouter>
-    </AppProvider>
   );
 };
 

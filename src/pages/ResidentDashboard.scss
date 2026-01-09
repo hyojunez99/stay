@@ -3,7 +3,6 @@
 
 #resident {
   width: 100%;
-  // height: 100vh;
   @include flex-layout(column, center, center, 0);
   .resident-top {
     width: 100%;
