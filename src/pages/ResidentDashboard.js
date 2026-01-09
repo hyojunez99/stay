@@ -58,7 +58,6 @@ const ResidentDashboard = ({ profile }) => {
           즐겨 찾는 차량
         </button>
       </div>
-      <ParkingInfo />
       <ParkingGird />
     </section>
   );
