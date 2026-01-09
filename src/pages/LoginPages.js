@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
-import logo from "../assets/images/Logo/logo.png";
+import logo from "../assets/images/Logo/logo-2.png";
+import "./LoginPages.scss";
 
 const LoginPages = () => {
   const navigate = useNavigate();
@@ -52,14 +53,14 @@ const LoginPages = () => {
         <input
           value={loginId}
           onChange={(e) => setLoginId(e.target.value)}
-          placeholder="아이디를 입력 해주세요"
+          placeholder="아이디를 입력해주세요"
         />
 
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="비밀번호를 입력 해주세요"
+          placeholder="비밀번호를 입력해주세요"
         />
 
         <button type="submit">

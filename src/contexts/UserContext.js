@@ -10,6 +10,7 @@ import {
     issueDiscount,
     fetchDiscountSummary,
     fetchVisitCars,
+    fetchFavoriteCars,
     toggleFavoriteCar,
     } from "../api/userApi";
 
@@ -36,6 +37,9 @@ const UserProvider = ({ children }) => {
 
   //  마이페이지 방문차량 목록
   const [visitCars, setVisitCars] = useState([]);
+  
+  // 즐겨찾기 목록 추가
+  const [favoriteCars, setFavoriteCars] = useState([]);
 
   //  상가 정산 페이지 요약 데이터 (qty, settlement_date, total_amount ...)
   const [discountSummary, setDiscountSummary] = useState(null);
@@ -299,6 +303,23 @@ const UserProvider = ({ children }) => {
       console.error(e);
     }
   };
+  /**
+   * ✅ [즐겨찾기 방문차량 목록]
+   *
+   * ✅ 사용 예시
+   * const { visitCars, fetchFavoriteCarsList } = useUser();
+   * useEffect(()=>{ fetchFavoriteCarsList(); },[]);
+   */
+  const fetchFavoriteCarsList = async () => {
+    if (!profile?.id) return;
+
+    try {
+      const list = await fetchFavoriteCars(profile.id);
+      setVisitCars(list);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   /**
    * ✅ [마이페이지 즐겨찾기 토글]
@@ -329,6 +350,7 @@ const UserProvider = ({ children }) => {
     profile,
     header,
     visitCars,
+    favoriteCars,
     discountSummary,
     loading,
 
@@ -353,6 +375,7 @@ const UserProvider = ({ children }) => {
 
     // mypage
     fetchVisitCarsList,
+    fetchFavoriteCarsList,
     toggleFavorite,
   };
 

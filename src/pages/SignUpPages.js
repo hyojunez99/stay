@@ -87,14 +87,14 @@ const SignUpPages = () => {
       return;
     }
 
-    // ✅ 네가 말한 흐름: 승인요청 -> alert -> 로그인 화면으로 이동
+    // ✅ 승인요청 -> alert -> 로그인 화면으로 이동
     alert("승인 요청이 완료되었습니다.\n관리자 승인 후 로그인 가능합니다.");
     navigate("/");
   };
 
   return (
     <div className="signup-wrap">
-      {/* 뒤로가기(원하면) */}
+      {/* 뒤로가기*/}
       <button className="su-back" type="button" onClick={() => navigate("/")}>
         ←
       </button>
@@ -181,6 +181,7 @@ const SignUpPages = () => {
           승인요청
         </button>
       </div>
+      <p>개인정보 처리방침</p>
     </div>
   );
 };
