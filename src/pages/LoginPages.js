@@ -5,50 +5,50 @@ import logo from "../assets/images/Logo/logo.png";
 
 const LoginPages = () => {
   const navigate = useNavigate();
-  const { doLogin } = useUser();
+  // const { doLogin } = useUser();
 
-  const [loginId, setLoginId] = useState("");
-  const [password, setPassword] = useState("");
+  // const [loginId, setLoginId] = useState("");
+  // const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const id = loginId.trim();
-    const pw = password.trim();
+    // const id = loginId.trim();
+    // const pw = password.trim();
 
-    if (!id || !pw) {
-      alert("아이디/비밀번호를 입력해주세요.");
-      return;
-    }
+    // if (!id || !pw) {
+    //   alert("아이디/비밀번호를 입력해주세요.");
+    //   return;
+    // }
 
-    const res = await doLogin(id, pw);
+    // const res = await doLogin(id, pw);
 
-    // 승인대기/에러 처리
-    if (!res.ok) {
-      if (res.status === "PENDING") {
-        alert(res.message || "관리자 승인 대기 중입니다.");
-      } else {
-        alert(res.message || "로그인 실패");
-      }
-      return;
-    }
+    // // 승인대기/에러 처리
+    // if (!res.ok) {
+    //   if (res.status === "PENDING") {
+    //     alert(res.message || "관리자 승인 대기 중입니다.");
+    //   } else {
+    //     alert(res.message || "로그인 실패");
+    //   }
+    //   return;
+    // }
 
-    // ✅ 성공 시: user_type으로 이동
-    const role = res.profile.user_type;
+    // // ✅ 성공 시: user_type으로 이동
+    // const role = res.profile.user_type;
 
-    if (role === "APT") navigate("/app/resident");
-    else if (role === "STORE") navigate("/app/business");
-    else if (role === "ADMIN") navigate("/app/admin");
-    else {
-      alert("알 수 없는 권한입니다.");
-    }
+    // if (role === "APT") navigate("/app/resident");
+    // else if (role === "STORE") navigate("/app/business");
+    // else if (role === "ADMIN") navigate("/app/admin");
+    // else {
+    //   alert("알 수 없는 권한입니다.");
+    // }
   };
 
   return (
     <div className="login-wrap">
       <img src={logo} alt="logo" className="login-logo" />
 
-      <form onSubmit={handleSubmit} className="login-form">
+      {/* <form onSubmit={handleSubmit} className="login-form">
         <input
           value={loginId}
           onChange={(e) => setLoginId(e.target.value)}
@@ -65,7 +65,7 @@ const LoginPages = () => {
         <button type="submit">
           로그인
         </button>
-      </form>
+      </form> */}
 
       <div className="login-links">
         <button type="button" onClick={() => alert("구현하지 않습니다")}>
