@@ -14,8 +14,8 @@ import SalePage from "./pages/SalePage";
 import "./assets/scss/global.scss";
 import ParkingGird from "./components/ParkingGird";
 import Visited from "./pages/Visited";
-import ControlPage from "./pages/ControlPage";
-import AppProvider from "./contexts/AppProvider";
+import ControlPage from './pages/ControlPage'
+import  AppProvider from "./contexts/AdminContext";
 
 const TempButtons = () => {
   const navigate = useNavigate();
