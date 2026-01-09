@@ -13,7 +13,6 @@ const Layout = () => {
         <Outlet />
       </main>
       <Pcbanner/>
-
     </div>
   );
 };
