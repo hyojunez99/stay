@@ -1,132 +1,288 @@
-    .signup-wrap {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 60px 16px;
-    background: #fff;
-    }
+/* SignUpPages.scss */
+    @use "../assets/scss/_variables.scss" as *;
+    @use "../assets/scss/_mixin.scss" as *;
+    @use "../assets/scss/_font.scss" as *; 
 
-    .su-back {
-    position: absolute;
-    left: 16px;
-    top: 16px;
+
+/* =========================
+    Layout
+========================= */
+.signup-wrap {
+    min-height: 100vh;
+    width: 100%;
+    background: #fff;
+
+    @include flex-layout(column, flex-start, center, 0);
+    padding: 120px 16px 70px;
+
+    @include mobile {
+        padding: 90px 16px 56px;
+    }
+}
+
+/* 뒤로가기 */
+.su-back {
+    position: fixed;
+    left: 18px;
+    top: 14px;
     border: 0;
     background: transparent;
-    font-size: 24px;
     cursor: pointer;
-    }
-
-    .su-type {
-    width: min(520px, 92%);
-    margin-bottom: 20px;
-    }
-
-    .su-type-btn {
-    width: 100%;
-    height: 70px;
-    border-radius: 18px;
-    border: 0;
-    background: #f2f2f2;
+    @include font-title;
     font-size: 22px;
-    font-weight: 700;
+    line-height: 1;
+    color: var(--color-font);
+    &:hover {
+        opacity: 0.85;
+    }
+}
+
+/* 공통 폭 */
+.su-type,
+.su-form {
+    width: min(520px, 92vw);
+}
+
+/* =========================
+    가입유형 Dropdown
+    ✅ 메뉴가 폼을 가리지 않게 + 폼과 간격 동일하게(14px)
+========================= */
+.su-type {
+  margin-bottom: 14px; /* 기본 간격 */
+}
+
+.su-type-btn {
+    width: 100%;
+    height: 56px;
+    border-radius: 14px;
+    border: 0;
+    cursor: pointer;
+    background: #f2f2f2;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    cursor: pointer;
+    position: relative;
+
+    @include font-main;
+    font-weight: 600;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08);
+
+    &:hover {
+        background: #efefef;
     }
 
-    .su-caret.open {
-    transform: rotate(180deg);
+    &:focus-visible {
+        outline: 2px solid rgba(0, 0, 0, 0.65);
+        outline-offset: 2px;
     }
+}
 
+.su-caret {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    opacity: 0.7;
+    transition: transform 0.15s ease;
+}
+
+.su-caret.open {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+    /* ✅ 열렸을 때도 아래 폼과 간격이 “다른 폼들처럼” 넓게 */
     .su-type-menu {
     margin-top: 10px;
+    margin-bottom: 14px; /* ✅ 핵심: 첫 번째 입력폼과 간격 확보 */
     background: #f5f5f5;
-    border-radius: 18px;
+    border-radius: 14px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 14px 24px rgba(0, 0, 0, 0.10);
     }
 
-    .su-type-menu button {
-    height: 56px;
+.su-type-menu button {
+    height: 52px;
     border: 0;
     background: transparent;
-    font-size: 18px;
     cursor: pointer;
-    }
-    .su-type-menu button:hover {
-    background: #ededed;
-    }
 
-    .su-form {
-    width: min(520px, 92%);
+    @include font-main;
+    font-weight: 600;
+
+    &:hover {
+        background: #ededed;
+    }
+}
+
+/* =========================
+    Form
+========================= */
+.su-form {
     display: flex;
     flex-direction: column;
     gap: 14px;
     }
 
-    /* ✅ input + 2줄 텍스트를 한 박스 안에 */
+/* field */
     .su-field {
     position: relative;
     width: 100%;
     height: 72px;
-    border-radius: 18px;
+    border-radius: 14px;
     background: #f2f2f2;
     overflow: hidden;
+    transition: background 0.15s ease, box-shadow 0.15s ease;
+    }
+    .su-field:focus-within {
+    background: #f7f7f7;
+    box-shadow: 0 0 0 4px rgba(66, 54, 100, 0.10);
     }
 
-    /* input은 투명 배경 + 아래쪽 여백(텍스트 들어갈 자리) */
+/* input */
     .su-input {
     width: 100%;
     height: 100%;
     border: 0;
     outline: none;
     background: transparent;
-    padding: 22px 18px 14px;
-    font-size: 18px;
+    padding: 30px 18px 14px;
+
+    @include font-main;
+    font-size: 1rem;
+    color: var(--color-font);
+    caret-color: var(--color-font);
+
+    &::placeholder {
+        color: var(--color-font-sub);
+    }
     }
 
-    /* ✅ 두 줄 텍스트(오버레이) */
+/* overlay */
     .su-overlay {
     position: absolute;
     left: 18px;
     top: 14px;
     right: 18px;
+
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    pointer-events: none; /* 클릭 방해 X */
+    gap: 10px; /* ✅ 라벨/헬퍼 간격 더 넓게 */
+    pointer-events: none;
     }
 
     .su-label {
-    font-size: 14px;
-    font-weight: 700;
-    color: #111;
-    }
+    @include font-s;
+    font-weight: 600;                 /* 700 → 600 */
+    color: var(--color-font);         /* pure black 제거 */
+    opacity: 0.85;                    /* 살짝 연하게 */
+}
 
     .su-helper {
-    font-size: 14px;
-    color: #9a9a9a;
+    @include font-s;
+    color: var(--color-font-sub);
+    transition: opacity 0.12s ease;
     }
 
-    /* ✅ 클릭(포커스)했을 때 + 값이 들어가면 오버레이 숨김 */
-    .su-field:focus-within .su-overlay,
-    .su-field.has-value .su-overlay {
-    display: none;
-    }
+    /* ✅ 요청: 입력할 때 라벨은 유지, 헬퍼만 사라지게 */
+    .su-field:focus-within .su-helper,
+    .su-field.has-value .su-helper {
+    opacity: 0;
+}
 
-    .su-submit {
+
+
+/* =========================
+Submit button
+========================= */
+.su-submit {
     margin-top: 14px;
     align-self: flex-end;
     width: 140px;
     height: 44px;
-    border-radius: 22px;
+    border-radius: 999px;
     border: 0;
-    background: #333;
-    color: #fff;
     cursor: pointer;
+    background: var(--color-main-1);
+    color: var(--color-font-white) !important; 
+    @include font-main;
+    font-weight: 700;
+    &:hover {
+        background: var(--color-main-1-hover);
+        color: var(--color-font-white) !important;
     }
+    &:active {
+        transform: translateY(1px);
+    }
+}
+
+/* 개인정보 처리방침 */
+.signup-wrap > p {
+    margin-top: 22px;
+    @include font-s;
+    color: var(--color-font);
+    opacity: 0.85;
+    text-align: center;
+}
+
+/* =========================
+    tablet 이상에서  폰트 키우기
+========================= */
+    @include tablet {
+    .su-type,
+    .su-form {
+        width: min(560px, 92vw);
+    }
+    .su-type-btn {
+        height: 60px;
+        @include dt-font-main;
+        font-size: 1.125rem;
+    }
+    .su-field {
+        height: 78px;
+    }
+    .su-input {
+        padding: 34px 20px 14px;
+        @include dt-font-main;
+    }
+    .su-label,
+    .su-helper {
+        font-size: 0.95rem;
+    }
+    }
+
+
+
+/* 모바일 미세조정 */
+@include mobile {
+    .su-type,
+    .su-form {
+        width: min(360px, 92vw);
+    }
+    .su-type-btn {
+        height: 54px;
+    }
+    .su-field {
+        height: 70px;
+    }
+    .su-input {
+        padding: 28px 16px 12px;
+    }
+    .su-overlay {
+        left: 16px;
+        right: 16px;
+        gap: 9px;
+    }
+    .su-caret {
+        right: 14px;
+    }
+}
+@media (max-width: 768px) {
+    .su-submit {
+        align-self: center;
+        margin: 16px auto 0;  
+    }
+
+  }

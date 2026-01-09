@@ -47,7 +47,9 @@ const LoginPages = () => {
 
   return (
     <div className="login-wrap">
-      <img src={logo} alt="logo" className="login-logo" />
+      <div className="login-logo-wrap">
+        <img src={logo} alt="logo" className="login-logo" />
+      </div>
 
       <form onSubmit={handleSubmit} className="login-form">
         <input
@@ -69,10 +71,10 @@ const LoginPages = () => {
       </form>
 
       <div className="login-links">
-        <button type="button" onClick={() => alert("구현하지 않습니다")}>
+        <button type="button" onClick={() => alert("현재 준비중인 기능입니다.")}>
           아이디 찾기
         </button>
-        <button type="button" onClick={() => alert("구현하지 않습니다")}>
+        <button type="button" onClick={() => alert("현재 준비중인 기능입니다.")}>
           비밀번호 찾기
         </button>
       </div>
