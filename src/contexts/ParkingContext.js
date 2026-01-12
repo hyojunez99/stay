@@ -125,22 +125,45 @@ import { fetchParkingSpots, fetchParkingStatusSummary,enterParking,registConfirm
         }
     }
 
-    const exit_car = async (carNum) => {
-        try{
-            //출차처리
-            const {registerTime,spot_id} = await exitParking(carNum);
-            const result = window.confirm(`주차시간 : ${registerTime}`);
-            if(result) {
-                //확인버튼 : 출차를 하겠음
-                await confirmExit(spot_id);
-                alert("안녕히 가세요!");
-                refreshBoard();
-            }
+    // const exit_car = async (carNum) => {
+    //     try{
+    //         //출차처리
+    //         const {registerTime,spot_id} = await exitParking(carNum);
+    //         const result = window.confirm(`주차시간 : ${registerTime}`);
+    //         if(result) {
+    //             //확인버튼 : 출차를 하겠음
+    //             await confirmExit(spot_id);
+    //             alert("안녕히 가세요!");
+    //             refreshBoard();
+    //         }
 
-        }catch(error){
-            console.error(error);
-        }
+    //     }catch(error){
+    //         console.error(error);
+    //     }
+    // }
+
+    const exit_car = async (carNum) => {
+    try {
+    const { registerTime, spot_id, need_settlement } =
+    await exitParking(carNum);
+
+    // ✅ 일반 방문만 정산 필요
+    if (need_settlement) {
+    alert('일반 방문 차량은 정산 후 출차 가능합니다.');
+    return;
     }
+
+    const result = window.confirm(`주차시간 : ${registerTime}`);
+    if (result) {
+    await confirmExit(spot_id);
+    alert('안녕히 가세요!');
+    refreshBoard();
+    }
+    } catch (error) {
+    console.error(error);
+    }
+};
+
 
 
     // ✅ 처음 화면 들어왔을 때 자동 조회 (강사님 스타일)
