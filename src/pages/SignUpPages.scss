@@ -1,8 +1,7 @@
 /* SignUpPages.scss */
-    @use "../assets/scss/_variables.scss" as *;
-    @use "../assets/scss/_mixin.scss" as *;
-    @use "../assets/scss/_font.scss" as *; 
-
+@use "../assets/scss/_variables.scss" as *;
+@use "../assets/scss/_mixin.scss" as *;
+@use "../assets/scss/_font.scss" as *;
 
 /* =========================
     Layout
@@ -12,277 +11,319 @@
     width: 100%;
     background: #fff;
 
-    @include flex-layout(column, flex-start, center, 0);
-    padding: 120px 16px 70px;
+  /* ✅ 로고는 위에 고정, 폼은 가운데로 */
+    position: relative;
+    @include flex-layout(column, center, center, 0);
+
+  /* ✅ 로고 영역만큼 위 패딩 확보 (로고와 겹침 방지) */
+    padding: 120px 16px 56px;
 
     @include mobile {
-        padding: 90px 16px 56px;
+        padding: 96px 16px 52px;
     }
 }
 
-/* 뒤로가기 */
-.su-back {
-    position: fixed;
-    left: 18px;
-    top: 14px;
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-    @include font-title;
-    font-size: 22px;
-    line-height: 1;
-    color: var(--color-font);
-    &:hover {
-        opacity: 0.85;
-    }
+/* =========================
+    Logo (좌측 상단 고정)
+========================= */
+.su-logo-wrap {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+
+  @include mobile {
+    top: 10px;
+    left: 10px;
+  }
+}
+
+.su-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+
+  @include mobile {
+    height: 44px;
+    width: 72px;
+  }
 }
 
 /* 공통 폭 */
 .su-type,
 .su-form {
-    width: min(520px, 92vw);
+  width: min(520px, 92vw);
 }
 
 /* =========================
     가입유형 Dropdown
-    ✅ 메뉴가 폼을 가리지 않게 + 폼과 간격 동일하게(14px)
+    ✅ 피그마: 522 x 45 + Drop shadow(0,4,4,0 / #000 20%)
 ========================= */
 .su-type {
-  margin-bottom: 14px; /* 기본 간격 */
+  margin-bottom: 14px;
 }
 
+/* ✅ 가입유형 박스만 얇게 (피그마 45px) */
 .su-type-btn {
-    width: 100%;
-    height: 56px;
-    border-radius: 14px;
-    border: 0;
-    cursor: pointer;
-    background: #f2f2f2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+  width: 100%;
+  height: 45px; /* ✅ 핵심: 얇게 */
+  border-radius: 14px;
+  border: 0;
+  cursor: pointer;
+  background: #f2f2f2;
 
-    @include font-main;
-    font-weight: 600;
-    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 
-    &:hover {
-        background: #efefef;
-    }
+  @include font-main;
+  font-weight: 600;
 
-    &:focus-visible {
-        outline: 2px solid rgba(0, 0, 0, 0.65);
-        outline-offset: 2px;
-    }
+  /* ✅ 피그마 Drop shadow 값 그대로 */
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    background: #efefef;
+    /* hover는 아주 살짝만 */
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.22);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.65);
+    outline-offset: 2px;
+  }
+
+  @include mobile {
+    height: 45px; /* 모바일도 동일 유지(피그마 느낌) */
+  }
 }
 
 .su-caret {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 12px;
-    opacity: 0.7;
-    transition: transform 0.15s ease;
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  opacity: 0.7;
+  transition: transform 0.15s ease;
+
+  @include mobile {
+    right: 14px;
+  }
 }
 
 .su-caret.open {
-    transform: translateY(-50%) rotate(180deg);
+  transform: translateY(-50%) rotate(180deg);
 }
 
-    /* ✅ 열렸을 때도 아래 폼과 간격이 “다른 폼들처럼” 넓게 */
-    .su-type-menu {
-    margin-top: 10px;
-    margin-bottom: 14px; /* ✅ 핵심: 첫 번째 입력폼과 간격 확보 */
-    background: #f5f5f5;
-    border-radius: 14px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 14px 24px rgba(0, 0, 0, 0.10);
-    }
+/* 드롭다운 메뉴 */
+.su-type-menu {
+  margin-top: 10px;
+  margin-bottom: 14px;
+  background: #f5f5f5;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  /* 메뉴도 버튼과 톤 통일 (과하게 퍼지지 않게) */
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.18);
+}
 
 .su-type-menu button {
-    height: 52px;
-    border: 0;
-    background: transparent;
-    cursor: pointer;
+  height: 45px; 
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 
-    @include font-main;
-    font-weight: 600;
+  @include font-main;
+  font-weight: 600;
 
-    &:hover {
-        background: #ededed;
-    }
+  &:hover {
+    background: #ededed;
+  }
 }
 
+
+/* ✅ 가운데 구분선 */
+.su-type-menu button + button {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
 /* =========================
     Form
 ========================= */
 .su-form {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    }
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 
 /* field */
-    .su-field {
-    position: relative;
-    width: 100%;
-    height: 72px;
-    border-radius: 14px;
-    background: #f2f2f2;
-    overflow: hidden;
-    transition: background 0.15s ease, box-shadow 0.15s ease;
-    }
-    .su-field:focus-within {
-    background: #f7f7f7;
-    box-shadow: 0 0 0 4px rgba(66, 54, 100, 0.10);
-    }
+.su-field {
+  position: relative;
+  width: 100%;
+  height: 72px;
+  border-radius: 14px;
+  background: #f2f2f2;
+  overflow: hidden;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.su-field:focus-within {
+  background: #f7f7f7;
+  box-shadow: 0 0 0 4px rgba(66, 54, 100, 0.10);
+}
 
 /* input */
-    .su-input {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    outline: none;
-    background: transparent;
-    padding: 30px 18px 14px;
+.su-input {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  padding: 30px 18px 14px;
 
-    @include font-main;
-    font-size: 1rem;
-    color: var(--color-font);
-    caret-color: var(--color-font);
+  @include font-main;
+  font-size: 1rem;
+  color: var(--color-font);
+  caret-color: var(--color-font);
 
-    &::placeholder {
-        color: var(--color-font-sub);
-    }
-    }
+  &::placeholder {
+    color: var(--color-font-sub);
+  }
+}
 
 /* overlay */
-    .su-overlay {
-    position: absolute;
-    left: 18px;
-    top: 14px;
-    right: 18px;
+.su-overlay {
+  position: absolute;
+  left: 18px;
+  top: 14px;
+  right: 18px;
 
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* ✅ 라벨/헬퍼 간격 더 넓게 */
-    pointer-events: none;
-    }
-
-    .su-label {
-    @include font-s;
-    font-weight: 600;                 /* 700 → 600 */
-    color: var(--color-font);         /* pure black 제거 */
-    opacity: 0.85;                    /* 살짝 연하게 */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
 }
 
-    .su-helper {
-    @include font-s;
-    color: var(--color-font-sub);
-    transition: opacity 0.12s ease;
-    }
-
-    /* ✅ 요청: 입력할 때 라벨은 유지, 헬퍼만 사라지게 */
-    .su-field:focus-within .su-helper,
-    .su-field.has-value .su-helper {
-    opacity: 0;
+.su-label {
+  @include font-s;
+  font-weight: 500;
+  color: var(--color-font);
+  opacity: 0.85;
 }
 
+.su-helper {
+  @include font-s;
+  color: var(--color-font-sub);
+  transition: opacity 0.12s ease;
+}
 
+/* 입력할 때 라벨은 유지, 헬퍼만 사라지게 */
+.su-field:focus-within .su-helper,
+.su-field.has-value .su-helper {
+  opacity: 0;
+}
 
 /* =========================
 Submit button
 ========================= */
 .su-submit {
-    margin-top: 14px;
-    align-self: flex-end;
-    width: 140px;
-    height: 44px;
-    border-radius: 999px;
-    border: 0;
-    cursor: pointer;
-    background: var(--color-main-1);
-    color: var(--color-font-white) !important; 
-    @include font-main;
-    font-weight: 700;
-    &:hover {
-        background: var(--color-main-1-hover);
-        color: var(--color-font-white) !important;
-    }
-    &:active {
-        transform: translateY(1px);
-    }
+  margin-top: 14px;
+  align-self: flex-end;
+  width: 140px;
+  height: 44px;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  background: var(--color-main-1);
+  color: var(--color-font-white) !important;
+
+  @include font-main;
+  font-weight: 700;
+
+  &:hover {
+    background: var(--color-main-1-hover);
+    color: var(--color-font-white) !important;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
 }
 
 /* 개인정보 처리방침 */
 .signup-wrap > p {
-    margin-top: 22px;
-    @include font-s;
-    color: var(--color-font);
-    opacity: 0.85;
-    text-align: center;
+  margin-top: 22px;
+  @include font-s;
+  color: var(--color-font);
+  opacity: 0.85;
+  text-align: center;
 }
 
 /* =========================
-    tablet 이상에서  폰트 키우기
+    tablet 이상에서 폰트 키우기
 ========================= */
-    @include tablet {
-    .su-type,
-    .su-form {
-        width: min(560px, 92vw);
-    }
-    .su-type-btn {
-        height: 60px;
-        @include dt-font-main;
-        font-size: 1.125rem;
-    }
-    .su-field {
-        height: 78px;
-    }
-    .su-input {
-        padding: 34px 20px 14px;
-        @include dt-font-main;
-    }
-    .su-label,
-    .su-helper {
-        font-size: 0.95rem;
-    }
-    }
+@include tablet {
+  .su-type,
+  .su-form {
+    width: min(560px, 92vw);
+  }
 
+  /* ✅ 가입유형은 얇게 유지(피그마 느낌) */
+  .su-type-btn {
+    height: 50px;
+    @include dt-font-main;
+    font-size: 1.05rem;
+  }
 
+  .su-field {
+    height: 78px;
+  }
+
+  .su-input {
+    padding: 34px 20px 14px;
+    @include dt-font-main;
+  }
+
+  .su-label,
+  .su-helper {
+    font-size: 0.95rem;
+  }
+}
 
 /* 모바일 미세조정 */
 @include mobile {
-    .su-type,
-    .su-form {
-        width: min(360px, 92vw);
-    }
-    .su-type-btn {
-        height: 54px;
-    }
-    .su-field {
-        height: 70px;
-    }
-    .su-input {
-        padding: 28px 16px 12px;
-    }
-    .su-overlay {
-        left: 16px;
-        right: 16px;
-        gap: 9px;
-    }
-    .su-caret {
-        right: 14px;
-    }
-}
-@media (max-width: 768px) {
-    .su-submit {
-        align-self: center;
-        margin: 16px auto 0;  
-    }
-
+  .su-type,
+  .su-form {
+    width: min(360px, 92vw);
   }
+
+  .su-field {
+    height: 70px;
+  }
+
+  .su-input {
+    padding: 28px 16px 12px;
+  }
+
+  .su-overlay {
+    left: 16px;
+    right: 16px;
+    gap: 9px;
+  }
+}
+
+@media (max-width: 768px) {
+  .su-submit {
+    align-self: center;
+    margin: 16px auto 0;
+  }
+}
