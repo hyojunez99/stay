@@ -13,18 +13,16 @@ const LoginPages = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const id = loginId.trim();
     const pw = password.trim();
-
     if (!id || !pw) {
       alert("아이디/비밀번호를 입력해주세요.");
       return;
     }
 
+        // 승인대기/에러 처리
     const res = await doLogin(id, pw);
-
-    // 승인대기/에러 처리
+    
     if (!res.ok) {
       if (res.status === "PENDING") {
         alert(res.message || "관리자 승인 대기 중입니다.");
