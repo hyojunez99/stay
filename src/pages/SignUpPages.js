@@ -100,6 +100,7 @@ const SignUpPages = () => {
       </button>
       
       
+      
 
       {/* 가입유형 드롭다운(아코디언 느낌) */}
       <div className="su-type">
