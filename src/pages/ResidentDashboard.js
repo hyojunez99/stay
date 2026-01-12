@@ -35,8 +35,10 @@ const ResidentDashboard = () => {
           <Weather />
         </div>
       </div>
-      <SystemController role="resident" />
-      <BannerSection />
+      <div className="scroll-container">
+        <SystemController role="resident" />
+        <BannerSection />
+      </div>
       <div className="favorite">
         <button onClick={() => navigate("/app/resident/favorite")}>
           즐겨 찾는 차량

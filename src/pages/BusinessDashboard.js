@@ -33,8 +33,10 @@ const BusinessDashboard = () => {
           <Weather />
         </div>
       </div>
-      <SystemController role="business" />
-      <BannerSection />
+      <div className="scroll-container">
+        <SystemController role="business" />
+        <BannerSection />
+      </div>
       <ParkingGird />
     </section>
   );
