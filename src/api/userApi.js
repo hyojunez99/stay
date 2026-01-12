@@ -212,7 +212,15 @@ export const issueDiscount = async ({ storeProfileId, minutes }) => {
     if (error) throw error;
     return true;
 };
-
+    export const updateSettlementStatus = async (targetCarNum)=>{
+    //업데이트 요청
+    const { error } = await supabase
+        .from('parking_reservations')          // 테이블명
+        .update({ need_settlement: false })    // 변경할 값 (정산완료 처리)
+        .eq('car_num', targetCarNum);          // 조건: car_num이 매개변수와 같은 것
+    if (error) throw error;
+    return true;
+}
 /**
  * ✅ [상가 정산 페이지]
  * - 할인권 수량 + 금액 계산
