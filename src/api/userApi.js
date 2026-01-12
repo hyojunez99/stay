@@ -49,6 +49,7 @@ export const signupProfile = async (form) => {
       user_type: form.userType, // "APT" | "STORE"
       car_num: form.carNum,
       dong_ho: form.dongHo,
+      is_approved: true
     },
   ]);
 
@@ -247,15 +248,14 @@ export const fetchDiscountSummary = async (storeProfileId) => {
 export const fetchVisitCars = async (profileId) => {
   const { data } = await supabase
     .from("parking_reservations")
-    .select("id, car_num, status, start_date, end_date, favorite_cars(id)")
+    .select("id, car_num, status, start_date, end_date")
     .eq("profile_id", profileId);
   return (data || []).map((row) => ({
     reservation_id: row.id,
     car_num: row.car_num,
     status: row.status,
     start_date: row.start_date?.slice(0, 10),
-    end_date: row.end_date?.slice(0, 10),
-    is_favorite: (row.favorite_cars?.length ?? 0) > 0,
+    end_date: row.end_date?.slice(0, 10)
   }));
 };
 
@@ -280,3 +280,16 @@ export const toggleFavoriteCar = async (profileId, carNum) => {
       .insert([{ profile_id: profileId, car_num: carNum }]);
   }
 };
+/***
+ * 즐겨찾기 목록 가져오기
+ */
+export const fetchFavoriteCars = async (profileId) => {
+  const { data, error } = await supabase
+    .from("favorite_cars")
+    .select("*")
+    .eq("profile_id", profileId)
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data;
+};
+

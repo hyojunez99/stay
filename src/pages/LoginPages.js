@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
-import logo from "../assets/images/Logo/logo.png";
+import logo from "../assets/images/Logo/logo-2.png";
+import "./LoginPages.scss";
 
 const LoginPages = () => {
   const navigate = useNavigate();
@@ -46,30 +47,32 @@ const LoginPages = () => {
 
   return (
     <div className="login-wrap">
-      <img src={logo} alt="logo" className="login-logo" />
+      <div className="login-logo-wrap">
+        <img src={logo} alt="logo" className="login-logo" />
+      </div>
 
       <form onSubmit={handleSubmit} className="login-form">
         <input
           value={loginId}
           onChange={(e) => setLoginId(e.target.value)}
-          placeholder="아이디를 입력 해주세요"
+          placeholder="아이디를 입력해주세요"
         />
 
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="비밀번호를 입력 해주세요"
+          placeholder="비밀번호를 입력해주세요"
         />
 
         <button type="submit">로그인</button>
       </form>
 
       <div className="login-links">
-        <button type="button" onClick={() => alert("구현하지 않습니다")}>
+        <button type="button" onClick={() => alert("현재 준비중인 기능입니다.")}>
           아이디 찾기
         </button>
-        <button type="button" onClick={() => alert("구현하지 않습니다")}>
+        <button type="button" onClick={() => alert("현재 준비중인 기능입니다.")}>
           비밀번호 찾기
         </button>
       </div>
