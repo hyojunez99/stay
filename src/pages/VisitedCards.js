@@ -3,22 +3,24 @@ import VisitedCard from "./VisitedCard";
 import AnimatedList from "./AnimatedList";
 import "./visited.scss";
 
-const VisitedCards = ({ list, role }) => {
-    const { toggleFavorite } = useUser();
+const VisitedCards = ({ list }) => {
+    const { toggleFavorite } = useUser();   
 
     const handleToggleFavorite = async (carNum) => {
-        await toggleFavorite(carNum);
-        // context에서 자동 refetch됨
-    };
+    await toggleFavorite(carNum);
+};
 
     return (
         <AnimatedList
-            items={list}
-            renderItem={(item) => (
+            items={list.map((v) => ({
+                ...v,
+                _key: v.reservation_id || v.car_num,
+            }))}
+            renderItem={(item, index) => (
                 <VisitedCard
-                    key={item.id}
+                first={index === 0}
+                    key={item._key}
                     data={item}
-                    role={role}
                     onToggleFavorite={handleToggleFavorite}
                 />
             )}
