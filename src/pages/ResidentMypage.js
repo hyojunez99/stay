@@ -4,22 +4,24 @@ import { useNavigate } from "react-router-dom";
 import {fetchHeaderBundle} from "../api/userApi";
 import "./ResidentMypage.scss";
 import { useEffect, useState } from "react";
+import { useUser } from "../contexts/UserContext";
 
 const ResidentMypage = () => {
   const navigate = useNavigate();
+  const {profile} = useUser();
   const [mypageData, setMypageData] = useState(null);
 
   //마이페이지 데이터 로드
   useEffect(() =>{
     const loadmypage = async () => {
-      const profileId = Number(localStorage.getItem("profileId"));
+      if (!profile?.id) return;
       try{
-        const data = await fetchHeaderBundle(profileId);
+        const data = await fetchHeaderBundle(profile.id);
         if(!data) {
           //만약 가져온 데이터가 없다면 기본값(빈 값)으로 세팅
           setMypageData({
             role_label: "입주민",
-            dong_ho: "",
+            dong_ho: profile.dong_ho || "",
             user_name: "",
             current_spot: null,
   });
@@ -32,7 +34,7 @@ const ResidentMypage = () => {
         console.log("마이 페이지 데이터 로딩 실패", error);
         setMypageData({
           role_label: "입주민",
-          dong_ho: "",
+          dong_ho: profile.dong_ho || "",
           user_name: "",
           current_spot: "",
         });
@@ -46,7 +48,6 @@ const ResidentMypage = () => {
 
   //로그아웃
   const handleLogout = () =>{
-    localStorage.removeItem("profileId");
     navigate("/");
   };
   if (mypageData === null) {
