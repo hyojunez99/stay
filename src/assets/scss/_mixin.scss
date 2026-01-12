@@ -5,14 +5,6 @@ $mobile: 375px;
     @content;
   }
 }
-//태블릿 기준 반응형
-$tablet: 768px;
-
-@mixin tablet {
-  @media all and (min-width: $tablet){
-    @content;
-  }
-}
 
 //데스크탑 기준 반응형
 $desktop: 1440px;

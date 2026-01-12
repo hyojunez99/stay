@@ -1,5 +1,6 @@
 @use "../assets/scss/variables" as *;
 @use "../assets/scss/font" as *;
+@use "../assets//scss/mixin" as *;
 
 .spot-card {
   width: 40%;
@@ -28,7 +29,10 @@
   border-radius: 2rem 2rem 0 0;
   transform: translate(-50%, 70%);
   transition: 0.3s;
-
+  @include desktop {
+    bottom: 150px;
+    height: 50vh;
+  }
   // 테두리 처리
   &::before {
     content: "";

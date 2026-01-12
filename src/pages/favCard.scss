@@ -21,15 +21,11 @@
         transform: translateX(120%);
         opacity: 0;
     }
-    .card-inner {
-        display: flex;
-        flex-direction: column;
-        padding: 0.18rem;
-        > p {
-            @include font-header;
-            // margin-top: 0.5rem;
-            color: var(--color-bg);
-        }
+    .car-number{
+        @include font-header;
+        font-weight: 600;
+        color: var(--color-bg);
+        margin: 4px 0 0 10px;
     }
     .star {
         position: absolute;

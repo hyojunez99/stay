@@ -3,7 +3,7 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/common/Header";
 import "./Layout.scss";
-import Pcbanner from "../components/common/Pcbanner";
+import Pcbanner from "../pages/Pcbanner";
 
 const Layout = () => {
   return (

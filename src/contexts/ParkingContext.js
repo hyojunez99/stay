@@ -81,7 +81,6 @@ import { fetchParkingSpots, fetchParkingStatusSummary,enterParking,registConfirm
     /* -----------------------------------------------------
         ✅ 3) 한 번에 갱신하기 (버튼/주기적 갱신용)
     ----------------------------------------------------- */
-
     /**
      * ✅ [현황판 새로고침 버튼 또는 주기적 갱신용]
      * - spots + summary 둘 다 최신으로 갱신
@@ -94,6 +93,47 @@ import { fetchParkingSpots, fetchParkingStatusSummary,enterParking,registConfirm
         await loadSpots();
         await loadSummary();
     };
+    //추가작성 부분
+    const regist_check = async (carNum) => {
+        try{
+            const data = await registConfirm(carNum);
+            return data;
+        }catch(error){
+            console.error(error);
+        }
+    }
+    const enter_car = async (carNum) => {
+        const cartype = {
+            APT: "입주민",
+            STORE: "사업자",
+            DAILY: "예약방문",
+            PERIOD: "장기방문",
+            ViST:"일반방문"
+            };
+        try{
+            const regist = await registConfirm(carNum);
+            const targetID = await enterParking(carNum,regist.parking_zone);
+            alert(`${cartype[regist.car_Type]}입니다${regist.parking_zone}구역${targetID}에 주차성공`);
+        }catch(error){
+            console.error(error);
+        }
+    }
+    const exit_car = async (carNum) => {
+        try{
+            //출차처리
+            const {registerTime,spot_id} = await exitParking(carNum);
+            const result = window.confirm(`주차시간 : ${registerTime}`);
+            if(result) {
+                //확인버튼 : 출차를 하겠음
+                await confirmExit(spot_id);
+                alert("안녕히 가세요!");
+                refreshBoard();
+            }
+        }catch(error){
+            console.error(error);
+        }
+    }
+
 
 //추가작성 부분
     const regist_check = async (carNum) => {

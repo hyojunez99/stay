@@ -26,10 +26,18 @@
 
 ```text
 src
-├── assets        # 이미지, 폰트 및 JSON 데이터
-├── components    # 재사용 가능한 공통 UI 컴포넌트
-├── pages         # 라우팅 페이지 (Main, Detail, Cart...)
-└── layout        # Header, Footer 등 레이아웃
+├── api             # Supabase 기반으로 관리자, 사용자, 주차, 정산 등 주요 기능의 데이터 처리를 담당하는 API 모음
+├── assets          # 재사용 가능한 공통 UI 컴포넌트
+│     ├── images    # 재사용 가능한 공통 UI 컴포넌트
+│     ├── scss      # 재사용 가능한 공통 UI 컴포넌트
+│     ├── svg       # 재사용 가능한 공통 UI 컴포넌트
+├── componetns      # 재사용 가능한 공통 UI 컴포넌트     
+│     ├── common    # 재사용 가능한 공통 UI 컴포넌트
+│     ├── mode      # 재사용 가능한 공통 UI 컴포넌트
+├── contexts        # 재사용 가능한 공통 UI 컴포넌트
+├── layout          # 재사용 가능한 공통 UI 컴포넌트
+└── pages           # 재사용 가능한 공통 UI 컴포넌트
+
 
 ## 5. 담당 역할
 

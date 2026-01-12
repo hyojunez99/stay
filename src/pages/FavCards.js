@@ -1,28 +1,27 @@
 import { useUser } from "../contexts/UserContext";
 import AnimatedList from "./AnimatedList";
 import FavCard from "./FavCard";
+import { useState } from "react";
 
 const FavCards = ({ list }) => {
-    const { toggleFavorite } = useUser();
-
-    if (!list || list.length === 0) {
-        return <p className="none">즐겨찾기된 차량이 없습니다.</p>;
-    }
+    const { fetchFavoriteCarsList } = useUser();
+    const [items, setItems] = useState(list);
 
     const handleRemove = async (carNum) => {
-        // 즐겨찾기 토글 처리
-        const res = await toggleFavorite(carNum);
+        setItems((prev) => prev.filter((v) => v.car_num !== carNum));
 
-        // 에러 발생 시 (선택적으로 UI 처리)
-        if (!res.ok) {
-            alert("처리 중 오류가 발생했습니다.");
+        const res = await fetchFavoriteCarsList(carNum);
+
+        if (res.error) {
+            alert("서버 오류");
+            // rollback 원하면 여기
         }
     };
 
     return (
         <div className="fav-cards">
             <AnimatedList
-                items={list}
+                items={items}
                 renderItem={(item) => (
                     <FavCard data={item} onRemove={handleRemove} />
                 )}

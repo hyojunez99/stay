@@ -1,10 +1,10 @@
 // --- pc 배너 ---
-import pcbanner1 from "../../assets/images/Banner/DT_Banner.BRjpg.jpg";
-import pcbanner2 from "../../assets/images/Banner/DT_Banner_HM.jpg";
-import pcbanner3 from "../../assets/images/Banner/DT_Banner_HO.jpg";
-import pcbanner4 from "../../assets/images/Banner/DT_Banner_LN.jpg";
-import pcbanner5 from "../../assets/images/Banner/DT_Banner_ST.jpg";
-import pcbanner6 from "../../assets/images/Banner/DT_Banner_cafe.jpg";
+import pcbanner1 from "../assets/images/Banner/DT_Banner.BRjpg.jpg";
+import pcbanner2 from "../assets/images/Banner/DT_Banner_HM.jpg";
+import pcbanner3 from "../assets/images/Banner/DT_Banner_HO.jpg";
+import pcbanner4 from "../assets/images/Banner/DT_Banner_LN.jpg";
+import pcbanner5 from "../assets/images/Banner/DT_Banner_ST.jpg";
+import pcbanner6 from "../assets/images/Banner/DT_Banner_cafe.jpg";
 import "./Pcbanner.scss";
 
 const Pcbanner = () => {
