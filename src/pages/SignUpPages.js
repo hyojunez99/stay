@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
-import logo from "../assets/images/Logo/EG_logo.png"; 
+import logo from "../assets/images/Logo/EG_logo.png";
 import "./SignUpPages.scss";
 
 const Field = ({
@@ -87,11 +87,20 @@ const SignUpPages = () => {
     navigate("/");
   };
 
+  const handleBack = () => {
+    navigate(-1); // 이전 페이지로 이동
+  };
+
   return (
     <div className="signup-wrap">
       {/* ✅ 상단 로고 (요청대로 맨 위) */}
       <div className="su-logo-wrap">
-        <img src={logo} alt="Stay 로고" className="su-logo" />
+        <img
+          src={logo}
+          alt="Stay 로고"
+          onClick={handleBack}
+          className="su-logo"
+        />
       </div>
 
       {/* 가입유형 드롭다운 */}
