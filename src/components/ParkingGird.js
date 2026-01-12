@@ -4,75 +4,56 @@ import ParkingInfo from "./ParkingInfo";
 import { fetchParkingSpots } from "../api/parkingAPI";
 import { useState, useEffect, useRef } from "react";
 
+// 드래그 최소 거리
+const SWIPE_THRESHOLD = 50;
+
 const ParkingGird = () => {
+  // 주차 자리 데이터
   const [parkingData, setParkingData] = useState([]);
+  // 스크롤 처리
   const [open, setOpen] = useState(false);
 
   const startY = useRef(0);
-  const isDragging = useRef(false);
+  const isMouseDown = useRef(false);
 
+  // 주차 데이터 불러오기
   useEffect(() => {
-    const loadParkingData = async () => {
-      try {
-        const data = await fetchParkingSpots();
-        setParkingData(data);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    loadParkingData();
+    fetchParkingSpots().then(setParkingData).catch(console.error);
   }, []);
 
   const grid = parkingData.filter((s) => s.zone === "APT");
   const shop = parkingData.filter((s) => s.zone === "STORE");
 
-  // 모바일 터치 이벤트
-  const onTouchStart = (e) => {
-    startY.current = e.touches[0].clientY;
-  };
-  const onTouchEnd = (e) => {
-    const endY = e.changedTouches[0].clientY;
-    const diff = startY.current - endY;
-    if (diff > 50) setOpen(true);
-    if (diff < -50) setOpen(false);
+  // 드래그 시작
+  const handleStart = (y) => {
+    startY.current = y;
+    isMouseDown.current = true;
   };
 
-  // PC 마우스 이벤트 (document에 등록)
-  const onMouseDown = (e) => {
-    isDragging.current = true;
-    startY.current = e.clientY;
-  };
+  // 드래그 종료
+  const handleEnd = (y) => {
+    if (!isMouseDown.current) return;
 
+    const diff = startY.current - y;
+    isMouseDown.current = false;
+
+    if (Math.abs(diff) < SWIPE_THRESHOLD) return;
+    setOpen(diff > 0);
+  };
+  // pc에서도 드래그 처리
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (!isDragging.current) return;
-      // 드래그 중 추가 기능 가능
-    };
+    const onMouseUp = (e) => handleEnd(e.clientY);
 
-    const handleMouseUp = (e) => {
-      if (!isDragging.current) return;
-      isDragging.current = false;
-      const endY = e.clientY;
-      const diff = startY.current - endY;
-      if (diff > 50) setOpen(true);
-      if (diff < -50) setOpen(false);
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
+    document.addEventListener("mouseup", onMouseUp);
+    return () => document.removeEventListener("mouseup", onMouseUp);
   }, []);
 
   return (
     <div
       className={`parking ${open ? "open" : ""}`}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-      onMouseDown={onMouseDown}
+      onMouseDown={(e) => handleStart(e.clientY)}
+      onTouchStart={(e) => handleStart(e.touches[0].clientY)}
+      onTouchEnd={(e) => handleEnd(e.changedTouches[0].clientY)}
     >
       <div className="handle" />
       <div className="info_box">

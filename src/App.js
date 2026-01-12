@@ -12,7 +12,6 @@ import OkPage from "./pages/OkPage";
 import BoardPage from "./pages/BoardPage";
 import SalePage from "./pages/SalePage";
 import "./assets/scss/global.scss";
-import ParkingGird from "./components/ParkingGird";
 import Visited from "./pages/Visited";
 import ControlPage from './pages/ControlPage'
 
@@ -59,19 +58,19 @@ const App = () => {
               <Route path="visited" element={<Visited />} />
             </Route>
 
-            {/* 관리자 페이지 */}
-            <Route path="admin">
-              <Route index element={<AdminDashboard />} />
-              <Route path="board" element={<BoardPage />} />
-              <Route path="okpage" element={<OkPage />} />
-              <Route path="salepage" element={<SalePage />} />
-            </Route>
+          {/* 관리자 페이지 */}
+          <Route path="admin">
+            <Route index element={<AdminDashboard />} />
+            <Route path="board" element={<BoardPage />} />
+            <Route path="okpage" element={<OkPage />} />
+            <Route path="salepage" element={<SalePage />} />
           </Route>
-          <Route path="Control" element={<ControlPage />}></Route>
-        </Routes>
-        {/* 임시버튼 */}
-        {/* <TempButtons /> */}
-      </HashRouter>
+        </Route>
+        <Route path="Control" element={<ControlPage />}></Route>
+      </Routes>
+      {/* 임시버튼 */}
+      {/* <TempButtons /> */}
+    </HashRouter>
   );
 };
 

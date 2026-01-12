@@ -65,9 +65,7 @@ const LoginPages = () => {
           placeholder="비밀번호를 입력해주세요"
         />
 
-        <button type="submit">
-          로그인
-        </button>
+        <button type="submit">로그인</button>
       </form>
 
       <div className="login-links">
