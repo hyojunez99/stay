@@ -9,7 +9,7 @@ const Visited = () => {
     useEffect(() => {
         if (profile?.id) fetchVisitCarsList();
     }, [profile?.id]);
-    console.log("visitCars =>", visitCars);
+    console.log(profile?.id);
     const role = profile?.user_type; // APT | STORE
 
     const filtered = visitCars.filter((item) => {

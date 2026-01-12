@@ -240,7 +240,7 @@ export const fetchDiscountSummary = async (storeProfileId) => {
 /**
  * ✅ [마이페이지]
  * - 방문 차량 목록
- *
+ * 
  * ✅ 사용 예시
  * const list = await fetchVisitCars(profile.id);
  */
