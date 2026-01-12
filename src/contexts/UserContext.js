@@ -12,6 +12,7 @@ import {
   fetchVisitCars,
   fetchFavoriteCars,
   toggleFavoriteCar,
+  updateSettlementStatus,
 } from "../api/userApi";
 
 /* =====================================================
@@ -248,7 +249,7 @@ const UserProvider = ({ children }) => {
      * const { issueStoreDiscount } = useUser();
      * await issueStoreDiscount(60); // 60분 -> 2장
      */
-    const issueStoreDiscount = async (minutes) => {
+    const issueStoreDiscount = async (minutes,carNum) => {
         if (!profile?.id) return { ok: false, message: "로그인이 필요합니다." };
 
         try {
@@ -256,6 +257,7 @@ const UserProvider = ({ children }) => {
             await issueDiscount({ storeProfileId: profile.id, minutes });
             // 발급 후 정산요약도 최신으로
             await fetchStoreDiscountSummary();
+            await updateSettlementStatus(carNum);
             return { ok: true };
         } catch (e) {
             console.error(e);
@@ -265,6 +267,7 @@ const UserProvider = ({ children }) => {
         }
     };
 
+    
     /**
      * ✅ [상가 정산 페이지]
      * - discount_sum을 가져와서 금액 계산된 요약 반환
