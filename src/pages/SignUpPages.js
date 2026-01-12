@@ -93,7 +93,7 @@ const SignUpPages = () => {
 
   return (
     <div className="signup-wrap">
-      {/* ✅ 상단 로고 (요청대로 맨 위) */}
+      {/* ✅ 상단 로고 (맨 위) */}
       <div className="su-logo-wrap">
         <img
           src={logo}

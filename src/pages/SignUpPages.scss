@@ -1,4 +1,3 @@
-/* SignUpPages.scss */
 @use "../assets/scss/_variables.scss" as *;
 @use "../assets/scss/_mixin.scss" as *;
 @use "../assets/scss/_font.scss" as *;
@@ -57,10 +56,21 @@
   }
 }
 
-/* 공통 폭 */
+/* =========================
+  ✅ 공통 폭 (피그마 기준 반응형)
+  - 375px 화면 → 359px
+  - 768px 화면 → 522px
+  - W = 203.5px + 41.5vw
+========================= */
 .su-type,
 .su-form {
-  width: min(520px, 92vw);
+  /* 375->359 / 768->522 정확히 맞추는 수식 */
+  width: clamp(320px, calc(203.5px + 41.5vw), 720px);
+
+  /* 초소형 화면에서도 안전하게 */
+  max-width: 96vw;
+
+  margin: 0 auto;
 }
 
 /* =========================
@@ -91,7 +101,7 @@
   /* ✅ 피그마 Drop shadow 값 그대로 */
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
 
-  transition: background 0.15s ease, box-shadow 0.15s ease;
+  transition:  0.15s ease, box-shadow 0.15s ease;
 
   &:hover {
     background: #efefef;
@@ -105,7 +115,7 @@
   }
 
   @include mobile {
-    height: 45px; /* 모바일도 동일 유지(피그마 느낌) */
+    height: 45px; /* 모바일도 동일 유지 */
   }
 }
 
@@ -159,6 +169,7 @@
 .su-type-menu button + button {
   border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
+
 /* =========================
     Form
 ========================= */
@@ -176,7 +187,7 @@
   border-radius: 14px;
   background: #f2f2f2;
   overflow: hidden;
-  transition: background 0.15s ease, box-shadow 0.15s ease;
+  transition:  0.15s ease, box-shadow 0.15s ease;
 }
 
 .su-field:focus-within {
@@ -275,12 +286,7 @@ Submit button
     tablet 이상에서 폰트 키우기
 ========================= */
 @include tablet {
-  .su-type,
-  .su-form {
-    width: min(560px, 92vw);
-  }
-
-  /* ✅ 가입유형은 얇게 유지(피그마 느낌) */
+  /* ✅ 가입유형은 얇게 유지 */
   .su-type-btn {
     height: 50px;
     @include dt-font-main;
@@ -304,11 +310,6 @@ Submit button
 
 /* 모바일 미세조정 */
 @include mobile {
-  .su-type,
-  .su-form {
-    width: min(360px, 92vw);
-  }
-
   .su-field {
     height: 70px;
   }

@@ -2,9 +2,9 @@
 @use "../assets/scss/_mixin.scss" as *;
 @use "../assets/scss/_font.scss" as *;
 
-    /* =========================
-    Layout
-    ========================= */
+/* =========================
+Layout
+========================= */
     .login-wrap {
     min-height: 100vh;
     width: 100%;
@@ -72,9 +72,17 @@
 
     /* =========================
     Login Form
+    ✅ 피그마 기준 반응형 폭
+    - 375px 화면 → 330px
+    - 768px 화면 → 565px
+    - W = 105.8px + 59.8vw
     ========================= */
     .login-form {
-    width: min(560px, 92vw);
+    /* 375->330 / 768->565 맞추는 수식 */
+    width: clamp(280px, calc(105.8px + 59.8vw), 760px);
+    max-width: 96vw;
+    margin: 0 auto;
+
     @include flex-layout(column, center, stretch, 14px);
 
     input {
@@ -82,7 +90,6 @@
         width: 100%;
         height: 56px;
         padding: 0 20px;
-
         background: #f1f1f1;
         border: 1px solid rgba(0, 0, 0, 0.04);
         border-radius: 999px;
@@ -114,14 +121,17 @@
         cursor: pointer;
         background: #423664;
         color: var(--color-font-white);
+
         &:hover {
         background: #594886;
         box-shadow: 0 10px 10px rgba(66, 54, 50, 0.08);
         }
+
         &:active {
         transform: translateY(1px);
         box-shadow: 0 6px 14px rgba(66, 54, 100, 0.16);
         }
+
         @include mobile {
         width: 140px;
         height: 42px;
@@ -136,7 +146,7 @@
     margin-top: 120px;
     @include flex-layout(row, center, center, 34px);
 
-    /* 🔹 회원가입과 분리되는 구분선 */
+    /* 회원가입과 분리되는 구분선 */
     position: relative;
     padding-bottom: 18px;
 
@@ -200,18 +210,13 @@
         padding: 10px 16px;
         border-radius: 999px;
         cursor: pointer;
-        transition: background 0.15s ease, border-color 0.15s ease,
+        transition:  0.15s ease, border-color 0.15s ease,
         transform 0.12s ease, box-shadow 0.15s ease;
 
         &:hover {
-        background: rgba(66, 54, 100, 0.10);
+        background: rgba(38, 31, 59, 0.1);
         border-color: rgba(66, 54, 100, 0.35);
-        box-shadow: 0 5px 10px rgba(66, 54, 100, 0.10);
-        }
-
-        &:active {
-        transform: translateY(1px);
-        box-shadow: 0 6px 14px rgba(66, 54, 100, 0.10);
+        box-shadow: 0 1px 6px rgba(66, 54, 100, 0.10);
         }
     }
 
@@ -222,4 +227,4 @@
         padding: 9px 14px;
         }
     }
-    }
+}
