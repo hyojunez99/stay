@@ -57,7 +57,7 @@ const ParkingGird = () => {
       <div className="handle" />
       <div className="info_box">
         <ParkingInfo data={summary}/>
-        <button onClick={() => refreshBoard()}>새로고침</button>
+        <button  className="re-btn"onClick={() => refreshBoard()}>새로고침</button>
       </div>
       <div className="all_box">
         <div className="R_box">

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { fetchParkingSpots, fetchParkingStatusSummary } from "../api/parkingAPI";
+import { fetchParkingSpots, fetchParkingStatusSummary,enterParking,registConfirm,exitParking,confirmExit } from "../api/parkingAPI";
 
 /* =====================================================
     1) Context 채널 만들기
@@ -27,6 +27,7 @@ import { fetchParkingSpots, fetchParkingStatusSummary } from "../api/parkingAPI"
     //  로딩 (선택)
     const [loading, setLoading] = useState(false);
 
+    
     /* -----------------------------------------------------
         ✅ 1) 현황판 전체 자리 조회
     ----------------------------------------------------- */
@@ -94,6 +95,54 @@ import { fetchParkingSpots, fetchParkingStatusSummary } from "../api/parkingAPI"
         await loadSummary();
     };
 
+//추가작성 부분
+    const regist_check = async (carNum) => {
+        try{
+            const data = await registConfirm(carNum);
+            return data;
+        }catch(error){
+            console.error(error);
+        }
+        
+    }
+    
+
+    const enter_car = async (carNum) => {
+        const cartype = {
+            APT: "입주민",
+            STORE: "사업자",
+            DAILY: "예약방문",
+            PERIOD: "장기방문",
+            ViST:"일반방문"
+            };
+        try{
+            const regist = await registConfirm(carNum);            
+            const targetID = await enterParking(carNum,regist.parking_zone);
+            alert(`${cartype[regist.car_Type]}입니다${regist.parking_zone}구역${targetID}에 주차성공`);
+            
+        }catch(error){
+            console.error(error);
+        }
+    }
+
+    const exit_car = async (carNum) => {
+        try{
+            //출차처리
+            const {registerTime,spot_id} = await exitParking(carNum);
+            const result = window.confirm(`주차시간 : ${registerTime}`);
+            if(result) {
+                //확인버튼 : 출차를 하겠음
+                await confirmExit(spot_id);
+                alert("안녕히 가세요!");
+                refreshBoard();
+            }
+
+        }catch(error){
+            console.error(error);
+        }
+    }
+
+
     // ✅ 처음 화면 들어왔을 때 자동 조회 (강사님 스타일)
     useEffect(() => {
         refreshBoard();
@@ -107,11 +156,14 @@ import { fetchParkingSpots, fetchParkingStatusSummary } from "../api/parkingAPI"
         spots,
         summary,
         loading,
-
+        
         // actions
         loadSpots,
         loadSummary,
         refreshBoard,
+        enter_car,
+        exit_car,
+        regist_check
     };
 
     return <ParkingContext.Provider value={value}>{children}</ParkingContext.Provider>;
