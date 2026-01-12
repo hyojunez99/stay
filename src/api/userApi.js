@@ -85,6 +85,7 @@ export const fetchHeaderBundle = async (profileId) => {
         role_label: profile.user_type === "APT" ? "입주자" : "사업자",
         dong_ho: profile.dong_ho,
         user_name: profile.user_name,
+        car_num: profile.car_num,
         current_spot: spot?.spot_id ?? null,
     };
 };
