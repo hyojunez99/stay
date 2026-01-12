@@ -10,24 +10,26 @@ const SaleCar = () => {
   const { issueStoreDiscount } = useUser();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // 새로고침 방지
 
+    // 공백 문 안내문
     if (!carNumber || !carSale) {
       alert("차량번호와 할인권 시간을 선택해주세요.");
       return;
     }
+    // 할인권 시간을 분 으로 변환
+    const minutes = parseInt(carSale, 10);
+    // 할인권 발급 분 단위로 전달
+    const res = await issueStoreDiscount(minutes);
 
-    const res = await issueStoreDiscount({
-      carNumber,
-      minutes: parseInt(carSale, 10),
-    });
-
+    // 실패 안내문
     if (!res.ok) {
       alert(res.message || "발급 실패");
       return;
     }
 
-    alert(`차량 ${carNumber} 할인권 ${carSale}분 발급 완료!`);
+    // 성공 요약 안내문
+    alert(`차량 ${carNumber} 할인권 ${minutes}분 발급 완료!`);
     setCarNumber("");
     setCarSale("");
   };
@@ -48,6 +50,7 @@ const SaleCar = () => {
         <label>할인권 선택</label>
         <select value={carSale} onChange={(e) => setCarSale(e.target.value)}>
           <option value="">할인권 시간을 선택해주세요</option>
+          <option value="30">30분</option>
           <option value="60">1시간</option>
           <option value="90">1시간 30분</option>
           <option value="120">2시간</option>
