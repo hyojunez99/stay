@@ -49,7 +49,7 @@ export const signupProfile = async (form) => {
       user_type: form.userType, // "APT" | "STORE"
       car_num: form.carNum,
       dong_ho: form.dongHo,
-      is_approved: true
+      is_approved: true,
     },
   ]);
 
@@ -255,7 +255,7 @@ export const fetchVisitCars = async (profileId) => {
     car_num: row.car_num,
     status: row.status,
     start_date: row.start_date?.slice(0, 10),
-    end_date: row.end_date?.slice(0, 10)
+    end_date: row.end_date?.slice(0, 10),
   }));
 };
 
@@ -292,4 +292,3 @@ export const fetchFavoriteCars = async (profileId) => {
   if (error) throw error;
   return data;
 };
-

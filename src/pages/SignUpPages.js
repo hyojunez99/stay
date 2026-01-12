@@ -98,8 +98,6 @@ const SignUpPages = () => {
       <button className="su-back" type="button" onClick={() => navigate("/")}>
         ←
       </button>
-      
-      
 
       {/* 가입유형 드롭다운(아코디언 느낌) */}
       <div className="su-type">

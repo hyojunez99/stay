@@ -30,8 +30,7 @@ const Header = () => {
   };
 
   // 페이지 마다 이미지 변경
-  const isAuthPage =
-    location.pathname === "/" || location.pathname === "/signup";
+  const isAuthPage = location.pathname === "/";
 
   // 로고 클릭 시 홈화면
   const handleLogoClick = () => {
