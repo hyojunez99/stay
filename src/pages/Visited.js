@@ -4,25 +4,29 @@ import VisitedCards from "./VisitedCards";
 import "./visited.scss";
 
 const Visited = () => {
-    const { profile, visitCars, fetchVisitCarsList } = useUser();
+const { profile, visitCars, favoriteCars, fetchVisitCarsList, fetchFavoriteCarsList } = useUser();
 
     useEffect(() => {
-        if (profile?.id) fetchVisitCarsList();
-    }, [profile?.id]);
-    console.log(profile?.id);
-    const role = profile?.user_type; // APT | STORE
+    if (profile?.id) {
+        fetchVisitCarsList();
+        fetchFavoriteCarsList(); 
+    }
+}, [profile?.id]);
 
-    const filtered = visitCars.filter((item) => {
-        if (role === "APT") return item.type === "resident";
-        if (role === "STORE") return item.type === "business";
-        return false;
-    });
+    if (!profile) return null;
+
+    const displayList = visitCars.map(v => ({
+    ...v,
+    isFavorite: favoriteCars?.some((f) => f.car_num === v.car_num) ?? false
+}));
 
     return (
         <div className="visited-page">
-            <h2>방문했던 차량</h2>
-            <p>방문 했던 차량들을 보여드릴게요</p>
-            <VisitedCards list={filtered} role={role} />
+            <div className="visited-header">
+                <h2>방문했던 차량</h2>
+                <p>방문 했던 차량들을 보여드릴게요</p>
+            </div>
+            <VisitedCards list={displayList} />
         </div>
     );
 };

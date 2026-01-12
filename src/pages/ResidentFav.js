@@ -5,12 +5,11 @@ import FavCards from "./FavCards.js";
 import "./favcards.scss";
 
 const ResidentFav = () => {
-    const { visitCars, fetchVisitCarsList } = useUser();
-    console.log("visitCars:", visitCars);
+    const { favoriteCars, fetchFavoriteCarsList, } = useUser();
 
     // 페이지 진입할 때 즐겨찾기 목록 fetch
     useEffect(() => {
-        fetchVisitCarsList();
+        fetchFavoriteCarsList();
     }, []);
 
     return (
@@ -21,10 +20,10 @@ const ResidentFav = () => {
             </div>
 
             {/* 방문차량이 비어있을 때 처리 */}
-            {visitCars?.length === 0 ? (
+            {favoriteCars?.length === 0 ? (
                 <p className="empty">등록된 즐겨찾기 차량이 없습니다.</p>
             ) : (
-                <FavCards list={visitCars} />
+                <FavCards list={favoriteCars} />
             )}
         </div>
     );

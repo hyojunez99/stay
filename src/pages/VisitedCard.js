@@ -1,28 +1,32 @@
 import { ReactComponent as Star } from "../assets/svg/Star.svg";
+import { useState, useEffect } from "react";
 
-const VisitedCard = ({ data, role, onToggleFavorite }) => {
-    const { type, carNumber, visitedAt, storeName, name, favorite } = data;
+const VisitedCard = ({ data, first, onToggleFavorite }) => {
+    const { name, car_num, type, start_date, end_date, isFavorite } = data;
 
-    const handleStarClick = (e) => {
+    const [fav, setFav] = useState(isFavorite);
+
+    useEffect(() => {
+        setFav(isFavorite);
+    }, [isFavorite]);
+
+    const handleStar = (e) => {
         e.stopPropagation();
-        onToggleFavorite(carNumber);
+        setFav((v) => !v); // optimistic UI
+        onToggleFavorite?.(car_num);
     };
 
     return (
-        <div className={`visited-card ${type}`}>
-            {role === "APT" && type === "resident" && (
-                <Star
-                    className={`star ${favorite ? "active" : ""}`}
-                    onClick={handleStarClick}
-                />
-            )}
-
-            {type === "business" && <h3 className="title">{storeName}</h3>}
-            {type === "resident" && <h3 className="title">{name}</h3>}
-
+        <div className={`visited-card ${first ? "first" : ""}`}>
+            <Star
+                className={`star ${fav ? "active" : ""}`}
+                onClick={handleStar}
+            />
+            <h2 className="title">{name}</h2>
             <div className="txt">
-                <p>차량번호: {carNumber}</p>
-                <p>방문일: {visitedAt}</p>
+                <p>차량번호 {car_num}</p>
+                {type === "DAILY" && <p>방문일 {start_date}</p>}
+                {type === "PERIOD" && <p>방문일 {end_date}</p>}
             </div>
         </div>
     );
