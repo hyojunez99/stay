@@ -1,35 +1,23 @@
 import SpotCard from "./SpotCard";
 import "./ParkingGrid.scss";
 import ParkingInfo from "./ParkingInfo";
-import { fetchParkingSpots } from "../api/parkingAPI";
 import { useState, useEffect, useRef } from "react";
+import { useParkingBoard } from "../contexts/ParkingContext"; 
 
 // 드래그 최소 거리
 const SWIPE_THRESHOLD = 50;
 
 const ParkingGird = () => {
-  // 주차 자리 데이터
-  const [parkingData, setParkingData] = useState([]);
   // 스크롤 처리
   const [open, setOpen] = useState(false);
 
   const startY = useRef(0);
   const isMouseDown = useRef(false);
-
-  // 주차 데이터 불러오기
-  useEffect(() => {
-    fetchParkingSpots().then(setParkingData).catch(console.error);
-  }, []);
-
-  const grid = parkingData.filter((s) => s.zone === "APT");
-  const shop = parkingData.filter((s) => s.zone === "STORE");
-
   // 드래그 시작
   const handleStart = (y) => {
     startY.current = y;
     isMouseDown.current = true;
   };
-
   // 드래그 종료
   const handleEnd = (y) => {
     if (!isMouseDown.current) return;
@@ -48,6 +36,17 @@ const ParkingGird = () => {
     return () => document.removeEventListener("mouseup", onMouseUp);
   }, []);
 
+
+  // 주차 자리 데이터
+  const { spots, summary,refreshBoard} = useParkingBoard();
+  
+
+  // 주차 데이터 불러오기
+
+  const grid = spots.filter((s) => s.zone === "APT");
+  const shop = spots.filter((s) => s.zone === "STORE");
+
+
   return (
     <div
       className={`parking ${open ? "open" : ""}`}
@@ -57,7 +56,8 @@ const ParkingGird = () => {
     >
       <div className="handle" />
       <div className="info_box">
-        <ParkingInfo />
+        <ParkingInfo data={summary}/>
+        <button  className="re-btn"onClick={() => refreshBoard()}>새로고침</button>
       </div>
       <div className="all_box">
         <div className="R_box">

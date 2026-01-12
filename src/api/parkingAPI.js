@@ -31,11 +31,17 @@ export const fetchParkingStatusSummary = async () => {
   const empty = total - occupied;
   return { total, occupied, empty };
 };
+//추가로 입력한 부분
+
+
+
+
 
 
 //-----------------------------------------------------------------------//
 //control 페이지에 필요한 api정보
 //-----------------------------------------------------------------------//
+
 //등록차량 확인
 export const registConfirm = async (carNum) => {
   //등록된 차량인지 체크 및 상태값 전달
@@ -49,15 +55,18 @@ export const registConfirm = async (carNum) => {
     .or(`car_num.eq.${carNum},add_car.eq.${carNum}`) // 등록차량 또는 추가등록차량
     .maybeSingle();
   if (regist_error) {throw new Error("등록된 차량 확인 시 오류 발생"+regist_error.message);}
+  
   const registstate = registCheck ? true : false;
+  
   if(!registstate){ //입주민이 아니면
     const { data: reservationCheck, error: reservation_error } = await supabase
       .from("parking_reservations") //방문예약차량인지확인
       .select("visit_type")
       .eq("car_num", carNum)
-      .maybeSingle();
+      .maybeSingle(); 
     const reservationstate = reservationCheck ? true : false;
-    if (reservation_error) {throw new Error("등록된 차량 확인 시 오류 발생");}
+    if (reservation_error) {throw new Error("등록된 차량 확인 시 오류 발생");} 
+    
     if(reservationstate){//입주민이 아니고 방문예약차량이 맞으면
       car_Type = reservationCheck.visit_type;
       parking_zone="APT";
@@ -65,16 +74,21 @@ export const registConfirm = async (carNum) => {
   }else{//입주민이면
     car_Type = registCheck.user_type;
     parking_zone="APT";
+    
     // if(registCheck.user_type==="STORE"){
     //   parking_zone="STORE";
     // }else{
     //   parking_zone="APT";
     // }
+    
   }
   return { parking_zone, car_Type };
+
 }
+
 //입차처리
 export const enterParking = async (carNum,parking_zone) => {
+  
   //빈자리를 찾기 : 주차 공간 확보 //등록된 차량이면 아파트에 빈자리를 확인 미등록된 차량이면 상가에 빈자리를 확인 //car_num = null 그리고 type이 일치
   const { data: spots, error: spot_error } = await supabase
     .from("parking_spots")
@@ -83,18 +97,31 @@ export const enterParking = async (carNum,parking_zone) => {
     .is("occupant_car", null)
     // .order("spot_id", { ascending: true })
     // .limit(1);
+
   if (!spots || spots.length <= 0 || spot_error) {
     throw new Error("주차 공간이 없습니다");
   }
+
+  
   const targetID = spots[Math.floor(Math.random() * spots.length)].spot_id;
-  // const targetID = spots[0].spot_id;
+
+  // const targetID = spots[0].spot_id; 
+
+  
+
   const { error } = await supabase
     .from("parking_spots")
     .update({ occupant_car: carNum, is_occupied: true })
     .eq("spot_id", targetID);
+
   if (error) throw new Error(error);
   return targetID;
+
 };
+
+
+
+
 //출차 처리
 export const exitParking = async (carNum) => {
   //1. 차량찾기
