@@ -63,7 +63,7 @@ const BusinessMypage = () => {
           {mypageData.user_type === "STORE" && (
             <h2 className="name">{mypageData.user_name || "상호명 미등록"}</h2>
           )}
-          <span className="parking">
+          <span className="parking-spot">
             현재 주차 위치:{""} {mypageData.current_spot ?? "현재 주차 중인 차량이 없습니다"}
           </span>
         </div>
