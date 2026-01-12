@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
+import logo from "../assets/images/Logo/EG_logo.png"; 
 import "./SignUpPages.scss";
 
 const Field = ({
@@ -16,7 +17,6 @@ const Field = ({
 
   return (
     <div className={`su-field ${hasValue ? "has-value" : ""}`}>
-      {/* input */}
       <input
         className="su-input"
         name={name}
@@ -26,7 +26,6 @@ const Field = ({
         autoComplete={autoComplete}
       />
 
-      {/* ✅ 박스 안에 보이는 2줄 텍스트(오버레이) */}
       <div className="su-overlay">
         <div className="su-label">{label}</div>
         <div className="su-helper">{helper}</div>
@@ -40,13 +39,11 @@ const SignUpPages = () => {
   const { doSignup } = useUser();
 
   const [openType, setOpenType] = useState(false);
-
-  // "APT" | "STORE"
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState(""); // "APT" | "STORE"
 
   const [userName, setUserName] = useState("");
   const [dongHo, setDongHo] = useState("");
-  const [phone, setPhone] = useState(""); // DB에 없어서 저장은 안 하지만 UI는 유지
+  const [phone, setPhone] = useState(""); // UI 유지(현재 DB 미저장)
   const [carNum, setCarNum] = useState("");
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
@@ -70,7 +67,6 @@ const SignUpPages = () => {
     if (!loginId.trim()) return alert("아이디를 입력해주세요.");
     if (!password.trim()) return alert("비밀번호를 입력해주세요.");
 
-    // ✅ API/DB에 맞춰서 보내기 (phone은 현재 profiles에 없으니 보내지 않음)
     const form = {
       userType,
       userName: userName.trim(),
@@ -87,21 +83,18 @@ const SignUpPages = () => {
       return;
     }
 
-    // ✅ 승인요청 -> alert -> 로그인 화면으로 이동
     alert("승인 요청이 완료되었습니다.\n관리자 승인 후 로그인 가능합니다.");
     navigate("/");
   };
 
   return (
     <div className="signup-wrap">
-      {/* 뒤로가기*/}
-      <button className="su-back" type="button" onClick={() => navigate("/")}>
-        ←
-      </button>
-      
-      
+      {/* ✅ 상단 로고 (요청대로 맨 위) */}
+      <div className="su-logo-wrap">
+        <img src={logo} alt="Stay 로고" className="su-logo" />
+      </div>
 
-      {/* 가입유형 드롭다운(아코디언 느낌) */}
+      {/* 가입유형 드롭다운 */}
       <div className="su-type">
         <button
           type="button"
@@ -183,7 +176,8 @@ const SignUpPages = () => {
           승인요청
         </button>
       </div>
-      <p>개인정보 처리방침</p>
+
+      <p className="su-policy">개인정보 처리방침</p>
     </div>
   );
 };
