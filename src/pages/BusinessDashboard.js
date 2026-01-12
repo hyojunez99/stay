@@ -4,25 +4,26 @@ import "./BusinessDashboard.scss";
 import topImg from "../assets/images/Top/Intersect_OR.png";
 import Weather from "../components/Weather";
 import ParkingGird from "../components/ParkingGird";
-import { fetchHeaderBundle } from "../api/userApi";
 import { useEffect, useState } from "react";
+import { useUser } from "../contexts/UserContext"; // UserContext import
 
-const BusinessDashboard = ({ profile }) => {
-  const [headerInfo, setHeaderInfo] = useState(null); // 사용자 정보
+const BusinessDashboard = () => {
+  const { profile, header, fetchHeader } = useUser();
+  const [headerInfo, setHeaderInfo] = useState(null);
 
+  // 정보가 변경되면 최신 정보
   useEffect(() => {
-    if (!profile || !profile.id) return;
-    const loadHeaderInfo = async () => {
-      try {
-        const data = await fetchHeaderBundle(profile.id); // 사용자 정보 가져오기
-        setHeaderInfo(data);
-      } catch (error) {
-        console.error("사용자 정보 불러오기 실패:", error);
-      }
-    };
+    if (profile?.id) {
+      fetchHeader();
+    }
+  }, [profile, fetchHeader]);
 
-    loadHeaderInfo(); // 함수 호출
-  }, [profile]); // profile이 바뀔 때마다 실행
+  // 상태 업데이트
+  useEffect(() => {
+    if (header) {
+      setHeaderInfo(header);
+    }
+  }, [header]);
 
   return (
     <section id="business">
@@ -30,7 +31,6 @@ const BusinessDashboard = ({ profile }) => {
         <img src={topImg} alt="상단 이미지" />
         <div className="business-txt">
           <h2>많이 버세요</h2>
-          {/* supabase를 통한 정보 불러오기 */}
           {headerInfo ? (
             <>
               <p>{headerInfo.user_name}</p>
@@ -48,4 +48,5 @@ const BusinessDashboard = ({ profile }) => {
     </section>
   );
 };
+
 export default BusinessDashboard;

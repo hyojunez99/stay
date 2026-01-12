@@ -3,12 +3,14 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Car.scss";
-import { createPeriodReservation } from "../../api/userApi"; 
+import { useUser } from "../../contexts/UserContext";
 
-const LongCar = ({ profile }) => {
-  const [carNumber, setCarNumber] = useState(""); // 차량번호
-  const [visitDate, setVisitDate] = useState(null); // 방문날짜
-  const [reason, setReason] = useState(""); // 방문사유
+const LongCar = () => {
+  const [carNumber, setCarNumber] = useState("");
+  const [visitDate, setVisitDate] = useState(null);
+  const [reason, setReason] = useState("");
+
+  const { createPeriod } = useUser(); // ✅ 장기차량은 이거만 씀
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,25 +27,23 @@ const LongCar = ({ profile }) => {
 
     const dateISO = visitDate.toISOString().slice(0, 10);
 
-    try {
-      // 현재는 하루 기준으로 startDate와 endDate를 동일하게 설정
-      await createPeriodReservation({
-        profileId: profile.id,
-        carNum: carNumber,
-        dateISO,
-        purpose: reason,
-      });
+    const res = await createPeriod({
+      carNum: carNumber,
+      startDateISO: dateISO,
+      endDateISO: dateISO,
+      purpose: reason,
+    });
 
-      alert("장기 방문 차량 등록 성공!");
-
-      // 초기화
-      setCarNumber("");
-      setVisitDate(null);
-      setReason("");
-    } catch (err) {
-      console.error("장기 방문 차량 등록 실패:", err);
-      alert("등록 실패");
+    if (!res.ok) {
+      alert(res.message || "등록 실패");
+      return;
     }
+
+    alert("장기 방문 차량 등록 성공!");
+
+    setCarNumber("");
+    setVisitDate(null);
+    setReason("");
   };
 
   return (

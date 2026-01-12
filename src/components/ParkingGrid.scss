@@ -37,6 +37,16 @@
   transform: translate(-50%, 70%);
   transition: 0.3s;
 
+  // 테두리 처리
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 15px;
+    background-color: #d9d9d9;
+    border-radius: 2rem 2rem 0 0;
+    z-index: -1;
+  }
+
   .handle {
     cursor: pointer;
     width: 40px;
@@ -47,7 +57,7 @@
   }
 
   &.open {
-    transform: translateY(0); /* 화면 전체로 올라옴 */
+    transform: translate(-50%, 0%); /* 화면 전체로 올라옴 */
   }
 }
 
