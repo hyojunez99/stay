@@ -2,39 +2,44 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Car.scss";
-import { createDailyReservation } from "../../api/userApi";
+import { enterParking } from "../../api/parkingAPI"; // parkingAPI 불러오기
 
 const VisitCar = ({ profile }) => {
   const [carNumber, setCarNumber] = useState("");
   const [visitDate, setVisitDate] = useState(null);
   const [reason, setReason] = useState(""); // 장기 등록에서만 사용
+  const [loading, setLoading] = useState(false); // 로딩 상태 관리
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // 차량 번호와 방문 날짜가 입력되지 않은 경우
     if (!carNumber || !visitDate) {
       alert("차량 번호와 방문 날짜를 입력해주세요.");
       return;
     }
 
+    // 방문 날짜를 yyyy-dd-mm
     const dateISO = visitDate.toISOString().slice(0, 10);
+    setLoading(true);
 
     try {
-      await createDailyReservation({
-        profileId: profile.id,
-        carNum: carNumber,
-        dateISO,
-      });
+      // 주차 공간 처리 (차량 등록/출차)
+      const { targetID, type } = await enterParking(carNumber); // 차량 등록 API 호출
 
-      alert("등록 성공");
+      // 성공 시 알림
+      alert(`차량 등록 성공: ${carNumber} `);
 
       // 초기화
       setCarNumber("");
       setVisitDate(null);
       setReason("");
     } catch (err) {
+      // 오류 처리
+      alert(`등록 실패: ${err.message}`);
       console.error("방문 차량 등록 실패:", err);
-      alert("등록 실패");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -71,7 +76,9 @@ const VisitCar = ({ profile }) => {
       </div>
 
       <div className="car-btn">
-        <button type="submit">차량 등록</button>
+        <button type="submit" disabled={loading}>
+          차량 등록
+        </button>
       </div>
     </form>
   );

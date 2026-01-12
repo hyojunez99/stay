@@ -4,21 +4,23 @@ import { useNavigate } from "react-router-dom";
 import "./BusinessMypage.scss";
 import { useEffect, useState } from "react";
 import { fetchHeaderBundle } from "../api/userApi";
+import {useUser} from "../contexts/UserContext";
 
 const BusinessMypage = () => {
   const navigate = useNavigate();
+  const {profile} = useUser();
   const [mypageData, setMypageData] = useState(null);
   //마이페이지 데이터 로드
   useEffect(()=>{
     const loadmypage = async ()=>{
-      const profileId = localStorage.getItem("profileId");
+      if (!profile?.id) return;
       try{
-        const data = await fetchHeaderBundle(profileId);
+        const data = await fetchHeaderBundle(profile.id);
         if(!data) {
           //만약 가져온 데이터가 없다면 기본값(빈 값)으로 세팅
           setMypageData({
             role_label: "사업자",
-            dong_ho:"",
+            dong_ho:profile.dong_ho || "",
             user_name:"",
             current_spot: null,
           });
@@ -31,7 +33,7 @@ const BusinessMypage = () => {
         console.log("마이페이지 데이터 로딩 실패", error);
         setMypageData({
           role_label:"사업자",
-          dong_ho: "",
+          dong_ho: profile.dong_ho || "",
           user_name:"",
           current_spot: "",
         });
@@ -45,7 +47,6 @@ const BusinessMypage = () => {
 
   //로그아웃 처리
   const handleLogout =()=>{
-    localStorage.removeItem("profileId");
     navigate("/");
   };
   if (mypageData === null) {
