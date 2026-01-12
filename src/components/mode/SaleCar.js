@@ -20,7 +20,7 @@ const SaleCar = () => {
     // 할인권 시간을 분 으로 변환
     const minutes = parseInt(carSale, 10);
     // 할인권 발급 분 단위로 전달
-    const res = await issueStoreDiscount(minutes);
+    const res = await issueStoreDiscount(minutes,carNumber);
 
     // 실패 안내문
     if (!res.ok) {
