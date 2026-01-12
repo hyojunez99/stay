@@ -41,19 +41,6 @@ export const loginProfile = async (loginId, password) => {
  * await signupProfile(formData);
  */
 export const signupProfile = async (form) => {
-<<<<<<< HEAD
-  const { error } = await supabase.from("profiles").insert([
-    {
-      login_id: form.loginId,
-      password: form.password,
-      user_name: form.userName,
-      user_type: form.userType, // "APT" | "STORE"
-      car_num: form.carNum,
-      dong_ho: form.dongHo,
-      is_approved: true,
-    },
-  ]);
-=======
     const { error } = await supabase.from("profiles").insert([
         {
             login_id: form.loginId,
@@ -65,7 +52,6 @@ export const signupProfile = async (form) => {
             is_approved: true,
         },
     ]);
->>>>>>> 4c25d11 (feat: 방문차량 + 즐겨찾기 UI/logic 통합 및 스타일 정리)
 
     if (error) throw error;
     return true;
@@ -284,10 +270,7 @@ export const fetchVisitCars = async (profileId) => {
     type: row.visit_type,
     start_date: row.start_date?.slice(0, 10),
     end_date: row.end_date?.slice(0, 10),
-<<<<<<< HEAD
-=======
     status: row.status,
->>>>>>> 4c25d11 (feat: 방문차량 + 즐겨찾기 UI/logic 통합 및 스타일 정리)
   }));
 };
 

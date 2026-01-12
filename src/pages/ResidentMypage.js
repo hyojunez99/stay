@@ -35,8 +35,8 @@ const ResidentMypage = () => {
         setMypageData({
           role_label: "입주민",
           dong_ho: profile.dong_ho || "",
-          user_name: "",
-          current_spot: "",
+          car_num: profile.car_num || "",
+          current_spot: null,
         });
       }
     };
