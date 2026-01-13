@@ -4,8 +4,8 @@
 
 ## 1. 프로젝트 소개
 
-- **설명:** 기획부터 디자인, 개발까지 직접 참여하였으며, 입주민·사업자·관리자 역할 기반 UI와 주차 현황 확인 및 차량 등록 기능을 중심으로 한 주차 관리 시스템 프로젝트입니다. **Mock Data(JSON)**를 활용해 방문 차량 등록, 장기 차량 관리 등 실제 서비스 흐름을 구현하였습니다.
-- **진행 기간:** 2025.01.02 ~ 2025.01.XX (N일)
+- **설명:** 기획부터 디자인, 개발까지 직접 참여하였으며, 입주민·사업자·관리자 역할 기반 UI와 주차 현황 확인 및 차량 등록 기능을 중심으로 한 주차 관리 시스템 프로젝트입니다. Supabase를 활용하여 방문 차량 등록, 장기 차량 관리 등 실제 서비스 흐름을 구현하였습니다.
+- **진행 기간:** 2025.01.02 ~ 2025.01.13 (12일)
 - **개발 인원:** FrontEnd 5인 (Team Project)
 - **배포 링크:** [바로가기 URL 클릭]
 
@@ -15,7 +15,7 @@
 - **Framework:** React.js
 - **Styling:** SCSS
 - **Data Handling:** Custom Mock Data (JSON)
-- **Design & Tool:** **Figma**, Git, GitHub, GSAP
+- **Design & Tool:** **Figma** Photoshop, Illustrator, Git, GitHub, GSAP, Sass, Supabase
 
 ## 3. 기획 및 디자인 (Planning & Design)
 
