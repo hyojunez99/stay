@@ -1,3 +1,17 @@
 @use "../assets/scss/variables" as *;
 @use "../assets/scss/font" as *;
-
+.info-p {
+  display: flex;
+  flex-direction: column;
+  p {
+    color: aqua;
+    font-weight: 600;
+  }
+}
+.info-p p {
+  font-size: 1rem !important;
+  font-weight: 600;
+  &:nth-child(1){
+    font-weight: bold !important;
+  }
+}

@@ -14,7 +14,6 @@ import SalePage from "./pages/SalePage";
 import "./assets/scss/global.scss";
 import Visited from "./pages/Visited";
 import ControlPage from './pages/ControlPage'
-import ParkingInfo from "./components/ParkingInfo";
 const TempButtons = () => {
   const navigate = useNavigate();
   return (
@@ -61,7 +60,6 @@ const App = () => {
             {/* 관리자 페이지 */}
             <Route path="admin">
               <Route index element={<AdminDashboard />} />
-              <Route path="parking" element={<ParkingInfo />} />
               <Route path="board" element={<BoardPage />} />
               <Route path="okpage" element={<OkPage />} />
               <Route path="salepage" element={<SalePage />} />
