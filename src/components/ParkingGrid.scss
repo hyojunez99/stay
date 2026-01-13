@@ -160,10 +160,11 @@
   flex-direction: column;
   gap: 10px;
   .regident-box {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 5px;
+    gap: 0.5rem;
     div {
       width: 15px;
       height: 15px;
@@ -185,7 +186,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 5px;
+    gap: 0.5rem;
     margin-bottom: 0.5rem;
     div {
       width: 15px;

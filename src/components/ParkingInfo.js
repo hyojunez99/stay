@@ -15,15 +15,15 @@ const ParkingInfo = ({data}) => {
     <div className="R"></div>
     <p>아파트 주차 구역</p>
     <div className="R-P"></div>
-    <p>아파트구역 주차중</p>
+    <p>주차 중</p>
     <div className="R-S"></div>
-    <p>아파트구역 사업자 주차중</p>
+    <p>사업자 주차 중</p>
     </div>
     <div className="shop-box">
     <div className="S"></div>
     <p>상가 주차 구역</p>
     <div className="S-P"></div>
-    <p>상가구역 주차중</p>
+    <p>주차 중</p>
     </div>
     </div>
     </>
