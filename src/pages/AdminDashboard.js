@@ -2,7 +2,7 @@ import "./AdminDashboard.scss";
 import { useNavigate } from "react-router-dom";
 import AdminImg from "../assets/images/admin/admin-img.png";
 import React, { useState } from "react";
-
+import ParkingInfo from "../components/ParkingInfo";
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [startTime, setStartTime] = useState("--:--");
@@ -65,16 +65,9 @@ const AdminDashboard = () => {
 
         {/* 메뉴 섹션 */}
         <section className="menu">
-          <button
-            className="menu-card"
-            onClick={() => navigate("/app/admin/parking")}
-          >
-            <h3>주차 현황</h3>
-            <p>
-              총 주차공간 00대
-              <br /> 주차완료 00대 | 빈 주차공간 00
-            </p>
-          </button>
+          <div className="menu-card">
+            <ParkingInfo />
+          </div>
           <button
             className="menu-card"
             onClick={() => navigate("/app/admin/board")}

@@ -1,14 +1,35 @@
 // 주차 현황 js
-const ParkingInfo = ({data}) => {
+import { fetchParkingStatusSummary } from "../api/parkingAPI";
+import { useState, useEffect } from "react";
+
+const ParkingInfo = () => {
+  const [totalparking, setTotalParking] = useState([]);
+  const [spotsparking, setspotsParking] = useState([]);
+  const [emptyparking, setemptyParking] = useState([]);
+
+  useEffect(() => {
+    const loadsummarydata = async () => {
+      try {
+        const { total, occupied, empty } = await fetchParkingStatusSummary();
+        setTotalParking(total);
+        setspotsParking(occupied);
+        setemptyParking(empty);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    loadsummarydata();
+  }, []);
+
   //총 주차대수
   return (
     <>
     <div className="info-p">
-      <p>총 주차면수 : {data.total}</p>
+      <p>총 주차면수 : {totalparking}</p>
       <p>│</p>
-      <p>현재 주차 : {data.occupied} </p>
+      <p>현재 주차 : {spotsparking} </p>
       <p>│</p>
-      <p>잔여석 : {data.empty}</p>
+      <p>잔여석 : {emptyparking}</p>
     </div>
     <div className="color-box">
       <div className="regident-box">
