@@ -11,6 +11,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  border: 1.5px solid #222;
 }
 
 .parking {
@@ -42,7 +43,7 @@
     border-radius: 2rem 2rem 0 0;
     z-index: -1;
   }
-//주석
+  //주석
   .handle {
     cursor: pointer;
     width: 40px;
@@ -54,35 +55,44 @@
 
   &.open {
     transform: translate(-50%, 0%); /* 화면 전체로 올라옴 */
+    @include desktop {
+      transform: translate(-50%, 0); // 데스크탑도 top 기준으로 전체 보이도록
+    }
+  }
+
+  @include desktop {
+    bottom: auto; // bottom 제거
+    top: 250px; // top으로 고정
+    height: calc(100vh - 250px); // 상단부터 화면 끝까지
   }
 }
-.APT{
+.APT {
   background-color: #594886;
   color: #fff;
 }
-.DAILY{
+.DAILY {
   background-color: #594886;
   color: #fff;
 }
-.PERIOD{
+.PERIOD {
   background-color: #594886;
   color: #fff;
 }
-.STORE{
+.STORE {
   background-color: #e27d35;
-  color: #FFF;
+  color: #fff;
 }
-.shop{
+.shop {
   background-color: #ff9494;
 }
-.shop.carnum{
+.shop.carnum {
   background-color: #c94545;
   color: #fff;
 }
-
-.info_box{
+//주석
+.info_box {
   position: relative;
-  .re-btn{
+  .re-btn {
     padding: 0.5rem;
     position: absolute;
     top: 0px;
@@ -90,7 +100,7 @@
     background-color: #444;
     color: #fff;
     border-radius: 1rem;
-    &:hover{
+    &:hover {
       background-color: #fff;
       color: #111;
     }
@@ -143,47 +153,52 @@
     @include font-main;
   }
 }
-.color-box{
+.color-box {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 10px;
-  .regident-box{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  div{
-    width: 15px;
-    height: 15px;
+  .regident-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    div {
+      width: 15px;
+      height: 15px;
+    }
+    p {
+      font-size: 14px;
+    }
+    .R {
+      background-color: #b6add0;
+    }
+    .R-P {
+      background-color: #594886;
+    }
+    .R-S {
+      background-color: #e27d35;
+    }
   }
-  p{font-size: 14px;}
-  .R{
-    background-color: #b6add0;
-  }
-  .R-P{
-    background-color: #594886;
-  }
-  .R-S{
-    background-color: #e27d35;
-  }
-  }
-  .shop-box{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  div{
-    width: 15px;
-    height: 15px;
-  }
-  p{font-size: 14px;}
-  .S{
-    background-color: #ff9494;
-  }
-  .S-P{
-    background-color: #c94545;
-  }
+  .shop-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 0.5rem;
+    div {
+      width: 15px;
+      height: 15px;
+    }
+    p {
+      font-size: 14px;
+    }
+    .S {
+      background-color: #ff9494;
+    }
+    .S-P {
+      background-color: #c94545;
+    }
   }
 }

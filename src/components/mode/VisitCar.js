@@ -12,7 +12,7 @@ const VisitCar = () => {
   const [reason, setReason] = useState(""); // 방문 사유
   const { createDaily } = useUser();
   const [loading, setLoading] = useState(false);
-  const { enter_car, refreshBoard } = useParkingBoard(); // 주차 현황판
+  // const { enter_car, refreshBoard } = useParkingBoard(); // 주차 현황판
 
   // 날짜를 YYYY-MM-DD 형식으로 변환
   const formatDate = (date) => {
@@ -32,7 +32,7 @@ const VisitCar = () => {
     }
 
     const dateISO = formatDate(visitDate);
-    const today = formatDate(new Date());
+    // const today = formatDate(new Date());
 
     setLoading(true);
 
@@ -44,13 +44,13 @@ const VisitCar = () => {
         return;
       }
 
-      // 당일 방문 차량이면 바로 입차
-      if (dateISO === today) {
-        await enter_car(carNumber);
-      }
+      // // 당일 방문 차량이면 바로 입차
+      // if (dateISO === today) {
+      //   await enter_car(carNumber);
+      // }
 
-      // 현황판 갱신
-      await refreshBoard();
+      // // 현황판 갱신
+      // await refreshBoard();
 
       // 성공 알림
       alert(`방문 차량 등록 완료: ${carNumber}`);
