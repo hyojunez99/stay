@@ -12,6 +12,7 @@ import {
     fetchVisitCars,
     fetchFavoriteCars,
     toggleFavoriteCar,
+  updateSettlementStatus,
     } from "../api/userApi";
 
 /* =====================================================
