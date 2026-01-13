@@ -3,10 +3,6 @@
 .info-p {
   display: flex;
   flex-direction: column;
-  p {
-    color: aqua;
-    font-weight: 600;
-  }
 }
 .info-p p {
   font-size: 1rem !important;
@@ -15,3 +11,6 @@
     font-weight: bold !important;
   }
 }
+// .color-box{
+//     display: none !important;
+// }

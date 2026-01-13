@@ -34,7 +34,7 @@ const AdminDashboard = () => {
   return (
     <div className="desktop">
       <div className="admin-dashboard">
-        {/* 상단 초록 카드 */}
+        {/* 상단 초록 카드~ */}
         <section className="card">
           <div className="admin-header">
             <div className="top-text">
@@ -66,7 +66,7 @@ const AdminDashboard = () => {
         {/* 메뉴 섹션 */}
         <section className="menu">
           <div className="menu-card">
-            <ParkingInfo />
+            <ParkingInfo hideColorBox={true} />
           </div>
           <button
             className="menu-card"
