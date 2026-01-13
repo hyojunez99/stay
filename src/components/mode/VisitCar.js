@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Car.scss";
 import { useUser } from "../../contexts/UserContext";
-import { useParkingBoard } from "../../contexts/ParkingContext";
+// import { useParkingBoard } from "../../contexts/ParkingContext";
 
 const VisitCar = () => {
   const [carNumber, setCarNumber] = useState(""); // 차량 번호
