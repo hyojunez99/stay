@@ -56,7 +56,6 @@ const SaleCar = () => {
           <option value="120">2시간</option>
         </select>
       </div>
-
       <div className="car-btn">
         <button type="submit">할인권 발급</button>
       </div>
