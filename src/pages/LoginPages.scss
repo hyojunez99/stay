@@ -34,19 +34,19 @@ Layout
     justify-content: center;
 
     &::before {
-        content: "";
-        position: absolute;
-        inset: -4px;
-        border-radius: 50%;
-        z-index: 0;
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    z-index: 0;
 
-        background: radial-gradient(
-        circle at 25% 78%,
-        rgba(0, 0, 0, 0.18) 0%,
-        rgba(0, 0, 0, 0.10) 30%,
-        rgba(0, 0, 0, 0.04) 45%,
-        rgba(0, 0, 0, 0) 55%
-        );
+    background: radial-gradient(
+    circle at 25% 78%,
+    rgba(0, 0, 0, 0.18) 0%,
+    rgba(0, 0, 0, 0.10) 30%,
+    rgba(0, 0, 0, 0.04) 45%,
+    rgba(0, 0, 0, 0) 55%
+    );
 
         filter: blur(3px);
     }
