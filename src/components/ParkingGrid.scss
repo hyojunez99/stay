@@ -11,6 +11,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  border: 1.5px solid #222;
 }
 
 .parking {
@@ -79,7 +80,7 @@
   background-color: #c94545;
   color: #fff;
 }
-
+//주석
 .info_box{
   position: relative;
   .re-btn{
@@ -174,6 +175,7 @@
   justify-content: center;
   align-items: center;
   gap: 5px;
+  margin-bottom: 0.5rem;
   div{
     width: 15px;
     height: 15px;

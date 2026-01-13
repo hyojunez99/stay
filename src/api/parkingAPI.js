@@ -62,10 +62,12 @@ export const registConfirm = async (carNum) => {
     const { data: reservationCheck, error: reservation_error } = await supabase
       .from("parking_reservations") //방문예약차량인지확인
       .select("visit_type")
+      .neq("profile_id",16)
       .eq("car_num", carNum)
       .maybeSingle(); 
     const reservationstate = reservationCheck ? true : false;
-    if (reservation_error) {throw new Error("등록된 차량 확인 시 오류 발생");} 
+
+    if (reservation_error) {throw new Error("등록된 차량 확인 시 오류 발생"+reservation_error.message);} 
     
     if(reservationstate){//입주민이 아니고 방문예약차량이 맞으면
       car_Type = reservationCheck.visit_type;
@@ -88,7 +90,21 @@ export const registConfirm = async (carNum) => {
 
 //입차처리
 export const enterParking = async (carNum,parking_zone) => {
-  
+
+  let statMsg = "";
+  //동일차량제어
+  const { data: duplication} = await supabase
+    .from("parking_spots")
+    .select("spot_id")
+    .eq("occupant_car", carNum)
+    .maybeSingle();
+const duplicationstat = duplication? true : false
+if(duplicationstat){
+  statMsg = duplication.spot_id+"에 이미 주차되어있는 차량입니다"
+  throw new Error(duplication.spot_id+"에 이미 주차되어있는 차량입니다");
+}
+
+
   //빈자리를 찾기 : 주차 공간 확보 //등록된 차량이면 아파트에 빈자리를 확인 미등록된 차량이면 상가에 빈자리를 확인 //car_num = null 그리고 type이 일치
   const { data: spots, error: spot_error } = await supabase
     .from("parking_spots")
@@ -99,6 +115,7 @@ export const enterParking = async (carNum,parking_zone) => {
     // .limit(1);
 
   if (!spots || spots.length <= 0 || spot_error) {
+    statMsg = "주차공간이 없습니다."
     throw new Error("주차 공간이 없습니다");
   }
 
@@ -108,14 +125,29 @@ export const enterParking = async (carNum,parking_zone) => {
   // const targetID = spots[0].spot_id; 
 
   
-
-  const { error } = await supabase
+//parking_spots 테이블에 저장 parking_spots테이블은 화면을 구성하는 테이블 입니다.
+  const { error: parking_spots_error } = await supabase
     .from("parking_spots")
     .update({ occupant_car: carNum, is_occupied: true })
     .eq("spot_id", targetID);
+  if (parking_spots_error) throw new Error(parking_spots_error);
 
-  if (error) throw new Error(error);
-  return targetID;
+
+//parking_reservations 테이블을 이용해서 정산기능 구현했습니다.
+//16번 아이디가 삭제되면 안됩니다.
+  const { error: parking_reservations_error } = await supabase.from("parking_reservations").insert([
+        {
+            profile_id: 16,
+            car_num: carNum,
+            visit_type: "VISIT",
+            start_date: new Date().toISOString(),
+            end_date: new Date().toISOString(),
+        },
+    ]);
+  if (parking_reservations_error) throw new Error(parking_reservations_error.message);
+
+  
+  return {targetID,statMsg};
 
 };
 
@@ -130,26 +162,70 @@ export const exitParking = async (carNum) => {
     .select("*")
     .eq("occupant_car", carNum)
     .single(); //한개만 가져와라
-  if (!spot) throw new Error("주차장에 차가 없습니다"); //우선 is_paid가 true/false
+  if (!spot) throw new Error("주차장에 차가 없습니다"); 
+
+  const { data: reservations } = await supabase
+    .from("parking_reservations")
+    .select("*")
+    .eq("car_num",carNum)
+    .eq("profile_id",16)
+    .single(); //한개만 가져와라
+
+
   let registerTime = null;
-  if (spot.type === "APT") {
+
+  if (spot.zone === "APT") {
     //이미 등록되어서 정산하지 않고 출차
+    console.log("주차타입 :"+spot.zone);
     registerTime = 0;
   } else {
     //2. 주차한 차를 찾으면, 주차 시간을 계산하기
     const nowTime = new Date();
-    const entryTime = new Date(spot.updated_at); //DB String --> Object // 현재시간 - 입차시간
+    console.log("현재시간 :"+nowTime);
+    const entryTime = new Date(reservations.start_date); //DB String --> Object // 현재시간 - 입차시간
+    console.log("입차시간 :"+entryTime);
     const diff = nowTime.getTime() - entryTime.getTime();
-    console.log(diff); //시간주차를 했는지. 1초 이상 1시간
-    registerTime = Math.round(diff / (1000 * 60 * 60 * 9));
+    console.log("현재시간 - 입차시간 :"+diff);
+    //시간주차를 했는지. 1초 이상 1시간
+    // registerTime = Math.round(diff / (1000 * 60 * 60 * 9));
+    registerTime = Math.round(diff / (60000));
+    console.log("최종시간 :"+registerTime+"분");
+
   }
-  return { registerTime: registerTime, spot_id: spot.spot_id };
+  return { registerTime: registerTime, spot_id: spot.spot_id , spot_type :spot.zone ,need_settlement: reservations.need_settlement};
 };
+
+
+
+
+
 //출차 확정
-export const confirmExit = async (spotId) => {
-  const { error } = await supabase
+export const confirmExit = async (spotId,carNum) => {
+  const { error:parking_spots } = await supabase
     .from("parking_spots")
     .update({ occupant_car: null, updated_at: null, is_occupied: false })
     .eq("spot_id", spotId);
-  if (error) throw new Error("출차하지 못했습니다");
+  if (parking_spots) throw new Error("출차하지 못했습니다");
+
+  const { error: parking_reservations_error } = await supabase
+    .from("parking_reservations")
+    .delete()
+    .eq("car_num",carNum)
+    .eq("profile_id",16);
+
+  if (parking_reservations_error) throw new Error(parking_reservations_error);
 };
+
+
+export const adjustment = async (carNum) => {
+  const { data: settlement, error } = await supabase
+    .from("parking_reservations")
+    .select("*")
+    .eq("car_num", carNum)
+    .eq("profile_id",16)
+    .maybeSingle();
+  if (error) throw error;
+
+  return {settlement: settlement.need_settlement, sdata : settlement.start_date};
+};
+// 

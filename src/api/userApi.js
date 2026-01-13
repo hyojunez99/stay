@@ -216,7 +216,7 @@ export const issueDiscount = async ({ storeProfileId, minutes }) => {
     //업데이트 요청
     const { error } = await supabase
         .from('parking_reservations')          // 테이블명
-        .update({ need_settlement: false })    // 변경할 값 (정산완료 처리)
+        .update({ need_settlement: true })    // 변경할 값 (정산완료 처리)
         .eq('car_num', targetCarNum);          // 조건: car_num이 매개변수와 같은 것
     if (error) throw error;
     return true;

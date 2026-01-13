@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 //주차 칸
 
 const SpotCard = ({data}) => {
-  const { regist_check } = useParkingBoard();
+  const { regist_check,adjustment_check } = useParkingBoard();
   const isCarnum = data.occupant_car ? true : false;
   const isResident = data.zone === 'APT';
   const [regist, setRegist] = useState(null);
+  const [adjustment, setAdjustment] = useState(null);
+  
 
   const cartype = {
   APT: "입주민",
@@ -17,16 +19,19 @@ const SpotCard = ({data}) => {
   useEffect(() => {
     if (!data?.occupant_car) {
       setRegist(null);
+      setAdjustment(null);
       return;
     }
     const fetchRegist = async () => {
     const result = await regist_check(data.occupant_car);
+    const adjustment_result = await adjustment_check(data.occupant_car);
     setRegist(result);
+    setAdjustment(adjustment_result);
   };
 
   fetchRegist();
   
-  }, [data?.occupant_car, regist_check]);
+  }, [data?.occupant_car, regist_check,adjustment_check]);
 
   if(isResident){
     //아파트표시카드
@@ -55,7 +60,10 @@ const SpotCard = ({data}) => {
     >
       <p>{data.spot_id}</p>
       <p>{data.occupant_car}</p>
-      <p>{isCarnum?(cartype[regist?.car_Type] ?? "일반방문"):''}</p>
+      {/* <p>{isCarnum?(cartype[regist?.car_Type] ?? "일반방문"):''}</p> */}
+      <p>{isCarnum?(adjustment?.settlement?"정산완료" : "미정산"):''}</p>
+      
+      
     </div>
   )
   }
