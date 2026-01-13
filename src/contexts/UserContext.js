@@ -1,19 +1,18 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 import {
-  loginProfile,
-  signupProfile,
-  fetchHeaderBundle,
-  createDailyReservation,
-  createPeriodReservation,
-  updateAddCar,
-  issueDiscount,
-  fetchDiscountSummary,
-  fetchVisitCars,
-  fetchFavoriteCars,
-  toggleFavoriteCar,
-  updateSettlementStatus,
-} from "../api/userApi";
+    loginProfile,
+    signupProfile,
+    fetchHeaderBundle,
+    createDailyReservation,
+    createPeriodReservation,
+    updateAddCar,
+    issueDiscount,
+    fetchDiscountSummary,
+    fetchVisitCars,
+    fetchFavoriteCars,
+    toggleFavoriteCar,
+    } from "../api/userApi";
 
 /* =====================================================
     1) Context 채널 만들기 

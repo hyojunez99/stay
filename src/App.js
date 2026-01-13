@@ -13,7 +13,7 @@ import BoardPage from "./pages/BoardPage";
 import SalePage from "./pages/SalePage";
 import "./assets/scss/global.scss";
 import Visited from "./pages/Visited";
-import ControlPage from "./pages/ControlPage";
+import ControlPage from './pages/ControlPage'
 
 const TempButtons = () => {
   const navigate = useNavigate();
@@ -58,19 +58,19 @@ const App = () => {
             <Route path="visited" element={<Visited />} />
           </Route>
 
-          {/* 관리자 페이지 */}
-          <Route path="admin">
-            <Route index element={<AdminDashboard />} />
-            <Route path="board" element={<BoardPage />} />
-            <Route path="okpage" element={<OkPage />} />
-            <Route path="salepage" element={<SalePage />} />
+            {/* 관리자 페이지 */}
+            <Route path="admin">
+              <Route index element={<AdminDashboard />} />
+              <Route path="board" element={<BoardPage />} />
+              <Route path="okpage" element={<OkPage />} />
+              <Route path="salepage" element={<SalePage />} />
+            </Route>
           </Route>
-        </Route>
-        <Route path="Control" element={<ControlPage />}></Route>
-      </Routes>
-      {/* 임시버튼 */}
-      {/* <TempButtons /> */}
-    </HashRouter>
+          <Route path="Control" element={<ControlPage />}></Route>
+        </Routes>
+        {/* 임시버튼 */}
+        {/* <TempButtons /> */}
+      </HashRouter>
   );
 };
 
