@@ -64,7 +64,7 @@ const BusinessMypage = () => {
             <h2 className="name">{mypageData.user_name || "상호명 미등록"}</h2>
           )}
            <span className="parking-spot">
-            현재 주차 위치:{""} {mypageData.current_spot ?? "현재 주차 중인 차량이 없습니다"}
+            현재 주차 위치:{""} {mypageData.current_spot ?? "현재 주차 중이 아닙니다"}
           </span>
         </div>
         {/* 카드 버튼 */}
