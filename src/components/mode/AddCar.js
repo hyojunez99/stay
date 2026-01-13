@@ -19,7 +19,7 @@ const AddCar = () => {
     }
 
     // 추가 차량번호 전달
-    const res = await saveAddCar(carNumber);
+    const res = await saveAddCar(carNumber, carName);
 
     // 실패 안내문
     if (!res.ok) {

@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Car.scss";
 import { useUser } from "../../contexts/UserContext";
+import { useParkingBoard } from "../../contexts/ParkingContext";
 
 const VisitCar = () => {
   const [carNumber, setCarNumber] = useState(""); // 차량 번호
@@ -11,6 +12,16 @@ const VisitCar = () => {
   const [reason, setReason] = useState(""); // 방문 사유
   const { createDaily } = useUser();
   const [loading, setLoading] = useState(false);
+  const { enter_car, refreshBoard } = useParkingBoard(); // 주차 현황판
+
+  // 날짜를 YYYY-MM-DD 형식으로 변환
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -20,23 +31,26 @@ const VisitCar = () => {
       return;
     }
 
-    // 날짜를 yyyy-mm-dd 형식으로 변환
-    const dateISO = visitDate.toISOString().slice(0, 10);
+    const dateISO = formatDate(visitDate);
+    const today = formatDate(new Date());
 
     setLoading(true);
 
     try {
-      // 방문 차량 당일 등록
-      const res = await createDaily({
-        carNum: carNumber,
-        dateISO,
-      });
-
-      // 실패 처리
+      // 방문 차량 등록
+      const res = await createDaily({ carNum: carNumber, dateISO });
       if (!res.ok) {
         alert(res.message || "등록 실패");
         return;
       }
+
+      // 당일 방문 차량이면 바로 입차
+      if (dateISO === today) {
+        await enter_car(carNumber);
+      }
+
+      // 현황판 갱신
+      await refreshBoard();
 
       // 성공 알림
       alert(`방문 차량 등록 완료: ${carNumber}`);
@@ -46,13 +60,12 @@ const VisitCar = () => {
       setVisitDate(null);
       setReason("");
     } catch (err) {
-      alert("방문 차량 등록 중 오류가 발생했습니다.");
       console.error(err);
+      alert("방문 차량 등록 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <form className="visit-form" onSubmit={handleSubmit}>
       <div className="input-group">
