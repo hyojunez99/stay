@@ -66,7 +66,7 @@ const AdminDashboard = () => {
         {/* 메뉴 섹션 */}
         <section className="menu">
           <div className="menu-card">
-            <ParkingInfo />
+            <ParkingInfo hideColorBox={true} />
           </div>
           <button
             className="menu-card"
