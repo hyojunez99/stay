@@ -16,7 +16,8 @@
     margin-top: -40px; //카드겹칠 떄
     transform: translateY(50px);
     box-shadow: 0 -8px 4px rgba(80, 80, 80, 0.2);
-    transition: transform 0.5s ease, opacity 0.3s ease;
+    // transition: transform 0.5s ease, opacity 0.3s ease;
+    transition: all 0.5s ease;
     cursor: pointer;
     color: var(--color-font);
     .txt {
@@ -35,12 +36,11 @@
         color: var(--color-bg);
     }
 }
-.visited-card:hover {
-    transform: translateY(-4px);
-}
 
 .visited-page {
     // 밑 바탕
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     width: 100%;
     height: 80vh;
@@ -49,6 +49,8 @@
     margin: 0 auto; // 가운데 정렬
     color: var(--color-bg);
     padding: 1rem;
+}
+.visited-header {
     > h2 {
         padding: 4rem 0 1rem 2rem;
         @include font-header;
@@ -59,7 +61,6 @@
         margin-top: -10px;
     }
 }
-
 .star {
     position: absolute;
     right: 16px;
@@ -70,4 +71,15 @@
     :hover {
         color: var(--color-main-1-hover);
     }
+    &.active {
+        color: rgb(255, 208, 0);
+    }
+}
+
+
+.visited-card:not(.first):hover {
+  transform: translateY(-10px);
+}
+.visited-card.first:hover {
+    margin-bottom: 50px;
 }

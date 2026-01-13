@@ -12,19 +12,25 @@ const AddCar = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // 차량번호와 명의자 공백 체크
     if (!carNumber || !carName) {
       alert("차량번호와 명의자를 모두 입력해주세요.");
       return;
     }
 
-    const res = await saveAddCar(carNumber);
+    // 추가 차량번호 전달
+    const res = await saveAddCar(carNumber, carName);
 
+    // 실패 안내문
     if (!res.ok) {
       alert(res.message || "등록 실패");
       return;
     }
 
+    // 성공 안내문
     alert("추가 차량 등록 성공!");
+
+    // 입력값 초기화
     setCarNumber("");
     setCarName("");
   };

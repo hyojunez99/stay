@@ -1,6 +1,6 @@
 // --- 입주민 마이페이지 ---
 
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import {fetchHeaderBundle} from "../api/userApi";
 import "./ResidentMypage.scss";
 import { useEffect, useState } from "react";
@@ -13,8 +13,8 @@ const ResidentMypage = () => {
 
   //마이페이지 데이터 로드
   useEffect(() =>{
+    if (!profile?.id) return;
     const loadmypage = async () => {
-      if (!profile?.id) return;
       try{
         const data = await fetchHeaderBundle(profile.id);
         if(!data) {
@@ -22,8 +22,8 @@ const ResidentMypage = () => {
           setMypageData({
             role_label: "입주민",
             dong_ho: profile.dong_ho || "",
-            user_name: "",
-            current_spot: null,
+            car_num: profile.car_num || "",
+            current_spot: data?.current_spot ?? null,
   });
           return;
         }
@@ -35,14 +35,14 @@ const ResidentMypage = () => {
         setMypageData({
           role_label: "입주민",
           dong_ho: profile.dong_ho || "",
-          user_name: "",
-          current_spot: "",
+          car_num: profile.car_num || "",
+          current_spot: null,
         });
       }
     };
     loadmypage();
   },[]);
-  useEffect(() =>{
+  useEffect(()=>{
     console.log("mypageData:", mypageData);
   },[mypageData]);
 
@@ -60,9 +60,9 @@ const ResidentMypage = () => {
         <div className="mypage-info">
           <span className="role">{mypageData.role_label || "입주민"}</span>
           <p className="address">{mypageData.dong_ho || "동·호수 정보 없음"}</p>
-          <h2 className="car-number">{mypageData.user_name || "차량 정보가 등록 되지 않았습니다"}</h2>
-          <span className="parking">
-            현재 주차 위치:{""} {mypageData.current_spot ?? "현재 주차 중이 아닙니다"}
+          <h2 className="car-number">{mypageData.car_num || "차량 정보 미등록"}</h2>
+          <span className="parking-spot">
+            {mypageData.current_spot? `현재 주차 위치: ${mypageData.current_spot}` : "현재 주차 중이 아닙니다"}
           </span>
       </div>
       {/* 카드 버튼 */}
@@ -83,13 +83,7 @@ const ResidentMypage = () => {
         >
           방문했던 차량
         </button>
-      <button
-        onClick={() => {
-          navigate("/app/resident/favorite");
-        }}
-      >
-        즐겨 찾는 차량
-      </button>
+      <button onClick={() => { navigate("/app/resident/favorite");}}> 즐겨 찾는 차량 </button>
       <button onClick={()=> alert("추후 업데이트 예정입니다.")}>자주 묻는 질문</button>
       </section>
       {/* 로그아웃 */}

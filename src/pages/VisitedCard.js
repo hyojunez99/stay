@@ -1,28 +1,36 @@
 import { ReactComponent as Star } from "../assets/svg/Star.svg";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
-const VisitedCard = ({ data, role, onToggleFavorite }) => {
-    const { type, carNumber, visitedAt, storeName, name, favorite } = data;
+const VisitedCard = ({ data, first, onToggleFavorite }) => {
+    const { name, car_num, type, start_date, end_date, isFavorite } = data;
+    const location = useLocation();
 
-    const handleStarClick = (e) => {
+    const isResident = location.pathname.includes("resident");
+
+    const [fav, setFav] = useState(isFavorite);
+    useEffect(() => setFav(isFavorite), [isFavorite]);
+
+    const handleStar = (e) => {
         e.stopPropagation();
-        onToggleFavorite(carNumber);
+        setFav((v) => !v);
+        onToggleFavorite?.(car_num);
     };
 
     return (
-        <div className={`visited-card ${type}`}>
-            {role === "APT" && type === "resident" && (
+        <div className={`visited-card ${first ? "first" : ""}`}>
+            {isResident && (
                 <Star
-                    className={`star ${favorite ? "active" : ""}`}
-                    onClick={handleStarClick}
+                    className={`star ${fav ? "active" : ""}`}
+                    onClick={handleStar}
                 />
             )}
 
-            {type === "business" && <h3 className="title">{storeName}</h3>}
-            {type === "resident" && <h3 className="title">{name}</h3>}
-
+            <h2 className="title">{name}</h2>
             <div className="txt">
-                <p>차량번호: {carNumber}</p>
-                <p>방문일: {visitedAt}</p>
+                <p>차량번호 {car_num}</p>
+                {type === "DAILY" && <p>방문일 {start_date}</p>}
+                {type === "PERIOD" && <p>방문일 {end_date}</p>}
             </div>
         </div>
     );

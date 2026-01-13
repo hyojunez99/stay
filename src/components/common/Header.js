@@ -10,6 +10,11 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation(); // URL 경로
 
+  // ✅ 로그인/회원가입에서는 공통 헤더 자체를 숨기겠습니다
+  const hideHeader =
+  location.pathname === "/" || location.pathname === "/signup";
+  if (hideHeader) return null;
+
   // URL에서 role 추출
   let role = null;
   if (location.pathname.startsWith("/app/resident")) {
@@ -30,8 +35,7 @@ const Header = () => {
   };
 
   // 페이지 마다 이미지 변경
-  const isAuthPage =
-    location.pathname === "/" || location.pathname === "/signup";
+  const isAuthPage = location.pathname === "/";
 
   // 로고 클릭 시 홈화면
   const handleLogoClick = () => {

@@ -14,6 +14,7 @@ import SalePage from "./pages/SalePage";
 import "./assets/scss/global.scss";
 import Visited from "./pages/Visited";
 import ControlPage from './pages/ControlPage'
+
 const TempButtons = () => {
   const navigate = useNavigate();
   return (
@@ -35,27 +36,27 @@ const TempButtons = () => {
 
 const App = () => {
   return (
-      <HashRouter>
-        <Routes>
-          {/* 로그인 / 회원가입 페이지 */}
-          <Route path="/" element={<LoginPages />} />
-          <Route path="/signup" element={<SignUpPages />} />
-          {/* 공통 Layout*/}
-          <Route path="/app" element={<Layout />}>
-            {/* 입주민 페이지 */}
-            <Route path="resident">
-              <Route index element={<ResidentDashboard />} />
-              <Route path="favorite" element={<ResidentFav />} />
-              <Route path="mypage" element={<ResidentMypage />} />
-              <Route path="visited" element={<Visited />} />
-            </Route>
+    <HashRouter>
+      <Routes>
+        {/* 로그인 / 회원가입 페이지 */}
+        <Route path="/" element={<LoginPages />} />
+        <Route path="/signup" element={<SignUpPages />} />
+        {/* 공통 Layout*/}
+        <Route path="/app" element={<Layout />}>
+          {/* 입주민 페이지 */}
+          <Route path="resident">
+            <Route index element={<ResidentDashboard />} />
+            <Route path="favorite" element={<ResidentFav />} />
+            <Route path="mypage" element={<ResidentMypage />} />
+            <Route path="visited" element={<Visited />} />
+          </Route>
 
-            {/* 사업자 페이지 */}
-            <Route path="business">
-              <Route index element={<BusinessDashboard />} />
-              <Route path="mypage" element={<BusinessMypage />} />
-              <Route path="visited" element={<Visited />} />
-            </Route>
+          {/* 사업자 페이지 */}
+          <Route path="business">
+            <Route index element={<BusinessDashboard />} />
+            <Route path="mypage" element={<BusinessMypage />} />
+            <Route path="visited" element={<Visited />} />
+          </Route>
 
             {/* 관리자 페이지 */}
             <Route path="admin">

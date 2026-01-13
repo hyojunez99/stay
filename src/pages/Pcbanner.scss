@@ -1,5 +1,5 @@
-@use "../../assets/scss/mixin" as *;
-@use "../../assets/scss/font" as *;
+@use "../assets/scss/mixin" as *;
+@use "../assets/scss/font" as *;
 
 .pc-banner {
   display: none;
@@ -30,7 +30,7 @@
     .side-banner-left {
       @include flex-layout(column);
       left: 220px;
-      top: 210px;
+      top: 400px;
       width: 200px;
       .left-txt {
         @include flex-layout(column, center, flex-start);
@@ -43,7 +43,7 @@
     }
     .side-banner-right {
       right: 170px;
-      top: 300px;
+      top: 500px;
       width: 250px;
     }
   }

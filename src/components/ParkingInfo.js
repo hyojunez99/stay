@@ -1,9 +1,7 @@
 // 주차 현황 js
 import { fetchParkingStatusSummary } from "../api/parkingAPI";
 import { useState, useEffect } from "react";
-import "./ParkingGrid.scss";
-import "./ParkingInfo.scss";
- 
+
 const ParkingInfo = () => {
   const [totalparking, setTotalParking] = useState([]);
   const [spotsparking, setspotsParking] = useState([]);
@@ -25,11 +23,15 @@ const ParkingInfo = () => {
 
   //총 주차대수
   return (
+    <>
     <div className="info-p">
       <p>총 주차면수 : {totalparking}</p>
+      <p>│</p>
       <p>현재 주차 : {spotsparking} </p>
+      <p>│</p>
       <p>잔여석 : {emptyparking}</p>
     </div>
+    </>
   );
 };
 
