@@ -166,11 +166,11 @@
       input,
       select,
       .issue-txt {
+        cursor: pointer;
         // select 드롭다운 스타일 제거
         appearance: none;
         -webkit-appearance: none;
         -moz-appearance: none;
-
         box-sizing: border-box;
         width: 100%;
         padding: 1.5rem 1rem;
